@@ -350,8 +350,9 @@ public interface X3ML {
 
         @XStreamImplicit
         public List<Source> node;
-          
-        public Relation relation;
+        
+        @XStreamImplicit
+        public List<Relation> relation;
     }
 
     @XStreamAlias("relation")

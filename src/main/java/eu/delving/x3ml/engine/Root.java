@@ -178,7 +178,7 @@ public class Root {
             return domains;
         }else{
             System.out.println("DOMAIN: "+domain);
-            List<Resource> listOfDomainResources=modelInputResources.getResources(modelInput,domain.source_node);
+            List<Resource> listOfDomainResources=modelInputResources.getResources(modelInput,domain.source_path);
             System.out.println(listOfDomainResources);
             List<Domain> domains = new ArrayList<Domain>();
             int index = 1;

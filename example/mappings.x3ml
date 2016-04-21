@@ -12,7 +12,11 @@
 				<source_path>
 					<node>http://www.cidoc-crm.org/cidoc-crm/Coin</node>
 					<relation>http://www.cidoc-crm.org/cidoc-crm/has_id</relation>
-					<node>http://www.cidoc-crm.org/cidoc-crm/Id</node>
+					<node>http://www.cidoc-crm.org/cidoc-crm/Id</node> 
+					<relation>http://www.cidoc-crm.org/cidoc-crm/has_id2</relation>
+					<node>http://www.cidoc-crm.org/cidoc-crm/Id2</node> 
+					<relation>http://www.cidoc-crm.org/cidoc-crm/has_id2</relation>
+					<node>http://www.cidoc-crm.org/cidoc-crm/Id3</node> 
 				</source_path>
 				<target_node>
 					<entity>

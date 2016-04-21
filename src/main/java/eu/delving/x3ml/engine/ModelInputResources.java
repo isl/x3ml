@@ -10,7 +10,10 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
+import com.hp.hpl.jena.query.Syntax;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -30,9 +33,34 @@ public class ModelInputResources {
         this.modelInput=model;
     }
     
-    public List<Resource> getResources(Model model, X3ML.Source source){
-        if (source != null) {
-            return getResources(model, source.expression);
+    public List<Resource> getResources(Model model, X3ML.SourcePath sourcePath){
+        String y="";
+        if (sourcePath != null) {
+            String node1=sourcePath.node.get(0).expression;           
+            
+            String sparql="PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ";
+            if(sourcePath.relation==null){
+                sparql+="select ?y where {?y rdf:type <"+node1+">} ";
+            }else{
+                y = "?y"+(sourcePath.node.size()-1);
+                
+                sparql+="select "+y+" where{ ";
+                for(int i=0;i<sourcePath.node.size()-1;i++){
+                    sparql+=
+                    "?y"+i+" rdf:type <"+sourcePath.node.get(i).expression+"> . "
+                   +"?y"+i+" <"+sourcePath.relation.get(i).expression+"> ?y"+(i+1)+". "
+                    +"?y"+(i+1)+" rdf:type <"+sourcePath.node.get(i+1).expression+"> . ";
+                }
+                sparql+="}";
+//                sparql+="select ?y where {?x rdf:type <"+node1+">. "
+//                         +"?x <"+sourcePath.relation.expression+"> ?y. "
+//                         +"?y rdf:type <"+sourcePath.node.get(1).expression+">}";
+System.out.println("SPARQL: "+sparql);
+            }
+                    
+            
+            
+            return getResources(model, sparql, y);
         } else {
             List<Resource> list = new ArrayList<Resource>(0);
             //to check
@@ -40,15 +68,26 @@ public class ModelInputResources {
         }
     }
 
-    public List<Resource> getResources(Model model, String expression) {
+    public List<Resource> getResources(Model model, String sparql, String key) {
         List<Resource> list = new ArrayList<Resource>();
-        if (expression == null || expression.length() == 0) {
+        if (sparql == null || sparql.length() == 0) {
             //to check
             return list;
         }
-            for(Statement st : model.listStatements(null, new PropertyImpl("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), new ResourceImpl(expression)).toList()){
-                list.add(st.getSubject());
-            }
+//        Query query = QueryFactory.create(sparql, Syntax.syntaxSPARQL);
+        Query qry = QueryFactory.create(sparql);
+        QueryExecution qe = QueryExecutionFactory.create(qry, this.modelInput);
+        ResultSet rs = qe.execSelect();
+        while(rs.hasNext()){
+            QuerySolution sol = rs.nextSolution();
+            RDFNode str = sol.get(key.replace("?", "")); 
+            System.out.println("Instance: "+str.toString());
+            list.add(str.asResource());
+        }
+        
+//            for(Statement st : model.listStatements(null, new PropertyImpl("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), new ResourceImpl(expression)).toList()){
+//                list.add(st.getSubject());
+//            }
             return list;
     }
     
