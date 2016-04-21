@@ -18,6 +18,9 @@ under the License.
 ==============================================================================*/
 package eu.delving.x3ml.engine;
 
+import com.hp.hpl.jena.rdf.model.Resource;
+import eu.delving.x3ml.INPUT_TYPE;
+import eu.delving.x3ml.X3MLEngine;
 import org.w3c.dom.Node;
 import static eu.delving.x3ml.X3MLEngine.exception;
 import static eu.delving.x3ml.engine.X3ML.ArgValue;
@@ -44,15 +47,28 @@ import static org.joox.JOOX.$;
 public abstract class GeneratorContext {
 
     public final Root.Context context;
+    public final Root.ContextRDF contextRDF;
     public final GeneratorContext parent;
     public final Node node;
     public final int index;
+    public final Resource resource;
     
     protected GeneratorContext(Root.Context context, GeneratorContext parent, Node node, int index) {
         this.context = context;
         this.parent = parent;
         this.node = node;
         this.index = index;
+        this.resource=null;
+        this.contextRDF = null;
+    }
+    
+    protected GeneratorContext(Root.ContextRDF context, GeneratorContext parent, Resource resource , int index) {
+        this.contextRDF = context;
+        this.parent = parent;
+        this.resource = resource;
+        this.index = index;
+        this.node=null;
+        this.context =null;
     }
 
     public GeneratedValue get(String variable, VariableScope scope) {
@@ -66,6 +82,7 @@ public abstract class GeneratorContext {
         if (parent == null) {
             throw exception("Parent context missing");
         }
+        System.out.println("PUTTING VAR"+variable+"\t"+scope+"\t"+generatedValue.text);
         parent.put(variable, scope, generatedValue);
     }
 
@@ -132,40 +149,72 @@ public abstract class GeneratorContext {
         }
         else{
             if(variable != null){
-                generatedValue = get(variable, VariableScope.WITHIN_MAPPING);
-                if (generatedValue == null) {
-                    generatedValue = context.policy().generate(generator, new Generator.ArgValues() {
+                if(X3MLEngine.inputType==INPUT_TYPE.XML){
+                    generatedValue = get(variable, VariableScope.WITHIN_MAPPING);
+                    if (generatedValue == null) {
+                        generatedValue = context.policy().generate(generator, new Generator.ArgValues() {
+                            @Override
+                            public ArgValue getArgValue(String name, SourceType sourceType) {
+                                return context.input().evaluateArgument(node, index, generator, name, sourceType);
+                            }
+                        });
+                        put(variable, VariableScope.WITHIN_MAPPING, generatedValue);
+                    }
+                }else{
+                    generatedValue = get(variable, VariableScope.WITHIN_MAPPING);
+                    if (generatedValue == null) {
+                        generatedValue = contextRDF.policy().generate(generator, new Generator.ArgValues() {
                         @Override
                         public ArgValue getArgValue(String name, SourceType sourceType) {
-                            return context.input().evaluateArgument(node, index, generator, name, sourceType);
+                            return null;
+    //                        return context.input().evaluateArgument(node, index, generator, name, sourceType);
                         }
-                    });
-                    put(variable, VariableScope.WITHIN_MAPPING, generatedValue);
+                        });
+                        put(variable, VariableScope.WITHIN_MAPPING, generatedValue);
+                    }
                 }
             }
             else{
-                String nodeName = extractXPath(node) + unique;
-                String xpathProper=extractAssocTableXPath(node);
-                generatedValue = context.getGeneratedValue(nodeName);
-                if (generatedValue == null) {
-                    generatedValue = context.policy().generate(generator, new Generator.ArgValues() {
-                        @Override
-                        public ArgValue getArgValue(String name, SourceType sourceType) {
-                            return context.input().evaluateArgument(node, index, generator, name, sourceType);
-                        }
-                    });
-                    GeneratedValue genArg=null;
-                    if(generator.getName().equalsIgnoreCase("Literal")){
-                        genArg = context.policy().generate(generator, new Generator.ArgValues() {
+                if(X3MLEngine.inputType==INPUT_TYPE.XML){
+                    String nodeName = extractXPath(node) + unique;
+                    String xpathProper=extractAssocTableXPath(node);
+                    generatedValue = context.getGeneratedValue(nodeName);
+                    if (generatedValue == null) {
+                        generatedValue = context.policy().generate(generator, new Generator.ArgValues() {
                             @Override
                             public ArgValue getArgValue(String name, SourceType sourceType) {
-                                return context.input().evaluateArgument2(node, index, generator, name, sourceType);
-
+                                return context.input().evaluateArgument(node, index, generator, name, sourceType);
                             }
                         });
+                        GeneratedValue genArg=null;
+                        if(generator.getName().equalsIgnoreCase("Literal")){
+                            genArg = context.policy().generate(generator, new Generator.ArgValues() {
+                                @Override
+                                public ArgValue getArgValue(String name, SourceType sourceType) {
+                                    return context.input().evaluateArgument2(node, index, generator, name, sourceType);
+
+                                }
+                            });
+                        }
+                        context.putGeneratedValue(nodeName, generatedValue);
+                        this.createAssociationTable(generatedValue, genArg, xpathProper);
                     }
-                    context.putGeneratedValue(nodeName, generatedValue);
-                    this.createAssociationTable(generatedValue, genArg, xpathProper);
+                }else{
+                     String nodeName = resource.getURI() + unique;
+                    generatedValue = contextRDF.getGeneratedValue(nodeName);
+                    if (generatedValue == null) {
+                        generatedValue = contextRDF.policy().generate(generator, new Generator.ArgValues() {
+                            @Override
+                            public ArgValue getArgValue(String name, SourceType sourceType) {
+                                System.out.println("getArgValue: "+name+"\t"+sourceType);
+                                return contextRDF.input().getLabel(resource,generator.getArgs().get(0).value, sourceType);
+                            }
+                        });
+                        if(generatedValue==null){    //use existing URI
+                            generatedValue=new GeneratedValue(X3ML.GeneratedType.URI, resource.getURI());
+                        }
+                        contextRDF.putGeneratedValue(nodeName, generatedValue);
+                    }
                 }
             }
         }

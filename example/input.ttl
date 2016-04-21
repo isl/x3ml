@@ -1,0 +1,8 @@
+<http://coin1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/Coin> .
+<http://coin1> <http://www.cidoc-crm.org/cidoc-crm/has_id> <http://id1> . 
+<http://id1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/Id> .
+<http://id1> <http://www.w3.org/2000/01/rdf-schema#label> "Coin1" . 
+<http://coin1> <http://www.cidoc-crm.org/cidoc-crm/has_value> <http://value1> . 
+<http://value1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/Value> .
+<http://value1> <http://www.w3.org/2000/01/rdf-schema#label> "2" . 
+

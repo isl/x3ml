@@ -19,6 +19,8 @@ under the License.
 package eu.delving.x3ml.engine;
 
 import com.hp.hpl.jena.rdf.model.Resource;
+import eu.delving.x3ml.INPUT_TYPE;
+import eu.delving.x3ml.X3MLEngine;
 import org.w3c.dom.Node;
 import static eu.delving.x3ml.engine.X3ML.RangeElement;
 
@@ -40,12 +42,22 @@ public class Range extends GeneratorContext {
         this.path = path;
         this.range = range;
     }
+    
+    public Range(Root.ContextRDF contextRDF, Path path, RangeElement range, Resource resource, int index) {
+        super(contextRDF, path, resource, index);
+        this.path = path;
+        this.range = range;
+    }
 
     public boolean resolve() {
         if (conditionFails(range.target_node.condition, this)) {
             return false;
         }
-        rangeResolver = new EntityResolver(context.output(), range.target_node.entityElement, this);
+        if(X3MLEngine.inputType==INPUT_TYPE.XML){
+            rangeResolver = new EntityResolver(context.output(), range.target_node.entityElement, this);
+        }else{
+            rangeResolver = new EntityResolver(contextRDF.output(), range.target_node.entityElement, this);
+        }
         return rangeResolver.resolve(0,0);
     }
 

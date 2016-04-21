@@ -31,7 +31,8 @@
 										<xs:element name="domain">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element ref="source_node"/>
+													<xs:element ref="source_node" minOccurs="0"/>
+													<xs:element ref="source_path" minOccurs="0" type="source_path_type"> </xs:element>
 													<xs:element name="target_node" type="domain_target_nodeType"/>
 													<xs:element name="comments" type="commentsType" minOccurs="0"/>
 												</xs:sequence>
@@ -80,6 +81,12 @@
 		<xs:sequence>
 			<xs:element ref="if" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element ref="entity"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="source_path_type">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element ref="node"  minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="relation"  minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="range_target_nodeType">

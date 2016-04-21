@@ -18,13 +18,16 @@ under the License.
 ==============================================================================*/
 package eu.delving.x3ml.engine;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
+import eu.delving.x3ml.INPUT_TYPE;
+import eu.delving.x3ml.X3MLEngine;
+import static eu.delving.x3ml.X3MLEngine.exception;
 import org.w3c.dom.Node;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import static eu.delving.x3ml.X3MLEngine.exception;
 import static eu.delving.x3ml.engine.X3ML.PathElement;
 import static eu.delving.x3ml.engine.X3ML.RangeElement;
 import static eu.delving.x3ml.engine.X3ML.Relationship;
@@ -53,6 +56,12 @@ public class Path extends GeneratorContext {
         this.domain = domain;
         this.path = path;
     }
+    
+    public Path(Root.ContextRDF contextRDF, Domain domain, PathElement path, Resource resource, int index) {
+        super(contextRDF, domain, resource, index);
+        this.domain = domain;
+        this.path = path;
+    }
 
     public boolean resolve() {
         X3ML.TargetRelation relation = path.target_relation;
@@ -70,7 +79,11 @@ public class Path extends GeneratorContext {
             throw exception("Target relation must just one property if it has no entities");
         }
         relationship = relation.properties.get(0);
-        property = context.output().createProperty(relationship);
+        if(X3MLEngine.inputType==INPUT_TYPE.XML){
+            property = context.output().createProperty(relationship);
+        }else{
+            property = contextRDF.output().createProperty(relationship);
+        }
         intermediateNodes = createIntermediateNodes(relation.entities, relation.properties, this);
         return true;
     }
@@ -111,6 +124,29 @@ public class Path extends GeneratorContext {
         for (Node rangeNode : rangeNodes) {
             Range rangeContext = new Range(context, this, range, rangeNode, index++);
             if (rangeContext.resolve()) {
+                ranges.add(rangeContext);
+            }
+        }
+        return ranges;
+    }
+    
+    public List<Range> createRangeContexts(Model modelInput,RangeElement range) {
+        if (range.source_node == null) {
+            throw exception("Range source absent: " + range);
+        }
+        //It compares the expression in the Path with the expression in the Range
+        String expression = path.source_relation.relation.get(0).expression;
+        if (range.source_node.expression.equals(expression)) {
+            expression = "";
+        }
+        List<Resource> rangeNodes = contextRDF.input().getResourcesForRange(modelInput, domain.resource, expression, range.source_node.expression);
+        System.out.println("FINAL RANGE RES: "+rangeNodes);
+
+        List<Range> ranges = new ArrayList<Range>();
+        int index = 1;
+        for (Resource rangeNode : rangeNodes) {
+            Range rangeContext = new Range(contextRDF, this, range, rangeNode, index++);
+            if (rangeContext.resolve()) {   //This one creates the URI of the range nodes (e.g. ID)
                 ranges.add(rangeContext);
             }
         }

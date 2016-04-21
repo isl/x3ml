@@ -20,6 +20,8 @@ package eu.delving.x3ml.engine;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
+import eu.delving.x3ml.INPUT_TYPE;
 import eu.delving.x3ml.X3MLEngine;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -42,10 +44,14 @@ import gr.forth.Utils;
 public class Root {
 
     private final Element rootNode;
+    public final Model modelInput;
     private final ModelOutput modelOutput;
     private final XPathInput xpathInput;
+    public final ModelInputResources modelInputResources;
     private final Context context;
+    private final ContextRDF contextRDF;
     private final Map<String, GeneratedValue> generated = new HashMap<String, GeneratedValue>();
+    private final Map<String, Resource> existingResources = new HashMap<String, Resource>();
 
     public Root(Element rootNode, final Generator generator, NamespaceContext namespaceContext, List<String> prefixes) {
         this.rootNode = rootNode;
@@ -90,6 +96,63 @@ public class Root {
                 }
             }
         };
+        this.modelInputResources=null;
+        this.modelInput=null;
+        this.contextRDF=null;
+    }
+    
+    public Root(Model modelInput, final Generator generator, NamespaceContext namespaceContext, List<String> prefixes) {
+        this.modelInput = modelInput;   // This is all the input RDF document
+        Model model = ModelFactory.createDefaultModel();
+        for (String prefix : prefixes) {
+            model.setNsPrefix(prefix, namespaceContext.getNamespaceURI(prefix));
+        }
+        this.modelOutput = new ModelOutput(model, namespaceContext);
+        this.modelInputResources = new ModelInputResources(modelInput);
+        this.contextRDF = new ContextRDF() {
+
+            @Override
+            public ModelInputResources input() {
+                return modelInputResources;
+            }
+
+            @Override
+            public ModelOutput output() {
+                return modelOutput;
+            }
+
+            @Override
+            public Generator policy() {
+                return generator;
+            }
+
+            @Override
+            public GeneratedValue getGeneratedValue(String xpath) {
+                System.out.println("GET GENER: "+xpath+"\t"+generated.get(xpath));
+                return generated.get(xpath);
+            }
+
+            @Override
+            public void putGeneratedValue(String xpath, GeneratedValue generatedValue) {
+                switch (generatedValue.type) {
+                    case URI:
+                        generated.put(xpath, generatedValue);
+                        break;
+                    case LITERAL:
+                        break;
+                    case TYPED_LITERAL:
+                        break;
+                }
+            }
+
+            @Override
+            public void putExistingResource(String key, Resource existingResource) {
+                    existingResources.put(key, existingResource);
+            }
+        };
+        this.rootNode=null;
+        this.xpathInput=null;
+        this.context=null;
     }
 
     public ModelOutput getModelOutput() {
@@ -97,21 +160,43 @@ public class Root {
     }
 
     public List<Domain> createDomainContexts(X3ML.DomainElement domain) {
-        List<Node> domainNodes = xpathInput.nodeList(rootNode, domain.source_node);
-        List<Domain> domains = new ArrayList<Domain>();
-        int index = 1;
-        for (Node domainNode : domainNodes) {
-            Domain domainContext = new Domain(context, domain, domainNode, index++);
-            try{
+        if(X3MLEngine.inputType==INPUT_TYPE.XML){
+            List<Node> domainNodes = xpathInput.nodeList(rootNode, domain.source_node);
+            List<Domain> domains = new ArrayList<Domain>();
+            int index = 1;
+            for (Node domainNode : domainNodes) {
+                Domain domainContext = new Domain(context, domain, domainNode, index++);
+                try{
+                    if (domainContext.resolve()) {
+                        domains.add(domainContext);
+                    } 
+                }catch(X3MLEngine.X3MLException ex){
+                    X3MLEngine.exceptionMessagesList+=ex.toString();
+                    Utils.printErrorMessages("ERROR FOUND: "+ex.toString());
+                }
+            }
+            return domains;
+        }else{
+            System.out.println("DOMAIN: "+domain);
+            List<Resource> listOfDomainResources=modelInputResources.getResources(modelInput,domain.source_node);
+            System.out.println(listOfDomainResources);
+            List<Domain> domains = new ArrayList<Domain>();
+            int index = 1;
+            for (Resource domainResource : listOfDomainResources) {
+                Domain domainContext = new Domain(contextRDF, modelInput, domain, domainResource, index++);
+                try{
                 if (domainContext.resolve()) {
                     domains.add(domainContext);
-                } 
-            }catch(X3MLEngine.X3MLException ex){
-                X3MLEngine.exceptionMessagesList+=ex.toString();
-                Utils.printErrorMessages("ERROR FOUND: "+ex.toString());
+                } else {
+                    System.out.println("Unresolved: " + domainContext);
+                }
+                }catch(X3MLEngine.X3MLException ex){
+                    System.out.println("EXCEPTION: "+ex);
+                }   
             }
+            return domains;
         }
-        return domains;
+                
     }
 
     public interface Context {
@@ -125,5 +210,20 @@ public class Root {
         GeneratedValue getGeneratedValue(String xpath);
 
         void putGeneratedValue(String xpath, GeneratedValue generatedValue);
+    }
+    
+    public interface ContextRDF {
+
+        ModelInputResources input();
+
+        ModelOutput output();
+
+        Generator policy();
+
+        GeneratedValue getGeneratedValue(String xpath);
+        
+        void putGeneratedValue(String xpath, GeneratedValue generatedValue);
+        
+        void putExistingResource(String xpath, Resource generatedValue);
     }
 }

@@ -18,6 +18,10 @@ under the License.
 ==============================================================================*/
 package eu.delving.x3ml.engine;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
+import eu.delving.x3ml.INPUT_TYPE;
+import eu.delving.x3ml.X3MLEngine;
 import org.w3c.dom.Node;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +47,20 @@ public class Domain extends GeneratorContext {
 
     public final DomainElement domain;
     public EntityResolver entityResolver;
+    public Resource resource;
+    public Model modelInput;
     private Map<String, X3ML.GeneratedValue> variables = new TreeMap<>();
     public static Map<String, X3ML.GeneratedValue> globalVariables = new TreeMap<>();
 
     public Domain(Root.Context context, DomainElement domain, Node node, int index) {
         super(context, null, node, index);
+        this.domain = domain;
+    }
+    
+    public Domain(Root.ContextRDF context, Model input, DomainElement domain, Resource resource, int index) {
+        super(context, null, resource, index); 
+        this.resource=resource;
+        this.modelInput=input;
         this.domain = domain;
     }
 
@@ -77,7 +90,11 @@ public class Domain extends GeneratorContext {
         if (conditionFails(domain.target_node.condition, this)) {
             return false;
         }
-        entityResolver = new EntityResolver(context.output(), domain.target_node.entityElement, this);
+        if(X3MLEngine.inputType==INPUT_TYPE.XML){
+            entityResolver = new EntityResolver(context.output(), domain.target_node.entityElement, this);
+        }else{
+            entityResolver = new EntityResolver(contextRDF.output(), domain.target_node.entityElement, this);
+        }
         return entityResolver.resolve(0,0);
     }
 
@@ -186,10 +203,19 @@ public class Domain extends GeneratorContext {
         }
         List<Path> paths = new ArrayList<Path>();
         int index = 1;
-        for (Node pathNode : context.input().nodeList(node, path.source_relation.relation.get(0).expression)) {
-            Path pathContext = new Path(context, this, path, pathNode, index++);
-            if (pathContext.resolve()) {
-                paths.add(pathContext);
+        if(X3MLEngine.inputType==INPUT_TYPE.XML){
+            for (Node pathNode : context.input().nodeList(node, path.source_relation.relation.get(0).expression)) {
+                Path pathContext = new Path(context, this, path, pathNode, index++);
+                if (pathContext.resolve()) {
+                    paths.add(pathContext);
+                }
+            }
+        }else{
+            for (Resource resource : contextRDF.input().getResourcesForPath(this.modelInput, resource, path.source_relation.relation.get(0).expression)) {
+                Path pathContext = new Path(contextRDF, this, path, resource, index++);
+                if (pathContext.resolve()) {
+                    paths.add(pathContext);
+                }
             }
         }
         return paths;

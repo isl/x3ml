@@ -18,6 +18,8 @@ under the License.
 ==============================================================================*/
 package gr.forth;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.util.FileManager;
 import eu.delving.x3ml.X3MLEngine;
 import static eu.delving.x3ml.X3MLEngine.exception;
 import eu.delving.x3ml.X3MLGeneratorPolicy;
@@ -40,9 +42,9 @@ public class Example {
     public static void main(String[] args) throws FileNotFoundException,  IOException{       
         
         final String MAPPINGS_PATH="example\\mappings.x3ml";
-        final String GENERATOR_POLICY_PATH="example\\generator-policy.xml";  //if empty, the generator will not be used
-        final String INPUT_PATH="example\\input.xml";
-        final String ASSOCIATION_TABLE_PATH="example\\association_table.xml"; ////if empty, the generator will not be used
+        final String GENERATOR_POLICY_PATH="";  //if empty, the generator will not be used
+        final String INPUT_PATH="example/input.ttl";
+        final String ASSOCIATION_TABLE_PATH=""; ////if empty, the generator will not be used
         final int UUID_SIZE=2;
         final outputFormat OUT_FORMAT=outputFormat.RDF_XML;
         final outputStream OUT_STREAM=outputStream.SYSTEM_OUT;
@@ -54,7 +56,7 @@ public class Example {
         }else{
             policy = X3MLGeneratorPolicy.load(new FileInputStream(new File(GENERATOR_POLICY_PATH)), X3MLGeneratorPolicy.createUUIDSource(UUID_SIZE));
         }
-        X3MLEngine.Output output = engine.execute(document(INPUT_PATH), policy);
+        X3MLEngine.Output output = engine.execute(model(INPUT_PATH), policy);
         switch(OUT_FORMAT){
             case RDF_XML:
                 switch(OUT_STREAM){
@@ -106,6 +108,10 @@ public class Example {
     
     private static X3MLEngine engine(String path) throws FileNotFoundException {
         return X3MLEngine.load(new FileInputStream(new File(path)));
+    }
+    
+    public static Model model(String path){
+        return FileManager.get().loadModel(path);
     }
     
     private static Element document(String path) {

@@ -152,6 +152,9 @@ public class X3MLGeneratorPolicy implements Generator {
             }
             return literalValue(value.string, getLanguage(value.language, argValues));
         }
+        if ("existingURI".equals(name)) {
+            return null;
+        }
         GeneratorSpec generator = generatorMap.get(name);
         if (generator == null) throw exception("No generator for " + name);
         if (generator.custom != null) {

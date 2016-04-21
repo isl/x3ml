@@ -72,6 +72,7 @@ public class X3MLEngine {
     private NamespaceContext namespaceContext = new XPathContext();
     private List<String> prefixes = new ArrayList<String>();
     public static String exceptionMessagesList="";
+    public static INPUT_TYPE inputType;
 
     public static List<String> validate(InputStream inputStream) {
         try{
@@ -127,6 +128,7 @@ public class X3MLEngine {
     }
 
     public Output execute(Element sourceRoot, Generator generator) throws X3MLException {
+        inputType=INPUT_TYPE.XML;
         Root rootContext = new Root(sourceRoot, generator, namespaceContext, prefixes);
         generator.setDefaultArgType(rootElement.sourceType);
         generator.setLanguageFromMapping(rootElement.language);
@@ -136,6 +138,20 @@ public class X3MLEngine {
             }
         }
         this.initializeAll();    
+        rootElement.apply(rootContext);
+        return rootContext.getModelOutput();
+    }
+    
+    public Output execute(Model model, Generator generator) throws X3MLException {
+        inputType=INPUT_TYPE.RDF;
+        Root rootContext = new Root(model, generator, namespaceContext, prefixes);
+        generator.setDefaultArgType(rootElement.sourceType);
+        generator.setLanguageFromMapping(rootElement.language);
+        if (rootElement.namespaces != null) {
+            for (MappingNamespace mn : rootElement.namespaces) {
+                generator.setNamespace(mn.prefix, mn.uri);
+            }
+        }
         rootElement.apply(rootContext);
         return rootContext.getModelOutput();
     }
@@ -381,3 +397,4 @@ public class X3MLEngine {
         }
     }
 }
+

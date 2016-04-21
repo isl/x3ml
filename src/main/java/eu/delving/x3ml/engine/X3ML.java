@@ -34,6 +34,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import eu.delving.x3ml.INPUT_TYPE;
 import eu.delving.x3ml.X3MLEngine;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -196,8 +197,14 @@ public interface X3ML {
             else {
                 try{
                     for (Path path : domain.createPathContexts(this.path)) {
-                        for (Range range : path.createRangeContexts(this.range)) {
-                            range.link();
+                        if(X3MLEngine.inputType==INPUT_TYPE.XML){
+                            for (Range range : path.createRangeContexts(this.range)) {
+                                range.link();
+                            }
+                        }else{
+                            for (Range range : path.createRangeContexts(domain.modelInput,this.range)) {
+                                range.link();
+                            }
                         }
                     }
                 }catch(X3MLEngine.X3MLException ex){
@@ -236,6 +243,8 @@ public interface X3ML {
     public static class DomainElement extends Visible {
 
         public Source source_node;
+        
+        public SourcePath source_path;
 
         public TargetNode target_node;
 
@@ -335,6 +344,15 @@ public interface X3ML {
           
         public Source node;
     }
+    
+    @XStreamAlias("source_path")
+    public class SourcePath extends Visible {
+
+        @XStreamImplicit
+        public List<Source> node;
+          
+        public Relation relation;
+    }
 
     @XStreamAlias("relation")
     @XStreamConverter(value = ToAttributedValueConverter.class, strings = {"expression"})
@@ -346,6 +364,8 @@ public interface X3ML {
     public static class RangeElement extends Visible {
 
         public Source source_node;
+        
+        public SourcePath source_path;
 
         public TargetNode target_node;
 
