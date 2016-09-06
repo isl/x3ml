@@ -153,48 +153,52 @@ public interface X3ML {
         public String skip;
 
         public void apply(Domain domain) {
+            
+            
+            
+            
             String pathSource = this.path.source_relation.relation.get(0).expression;
-            String pathSource2 = "";
-            String node_inside = "";
+//            String pathSource2 = "";
+//            String node_inside = "";
+//
+//            if (this.path.source_relation.relation.size() > 1) {
+//                pathSource2 = this.path.source_relation.relation.get(1).expression;
+//            }
 
-            if (this.path.source_relation.relation.size() > 1) {
-                pathSource2 = this.path.source_relation.relation.get(1).expression;
-            }
-
-            if (this.path.source_relation.node != null) {
-                node_inside = this.path.source_relation.node.expression;
-
-                int equals = pathSource.indexOf("==");
-
-                if (equals >= 0) {
-
-                    String domainForeignKey = pathSource.trim();
-                    String rangePrimaryKey = pathSource2.trim();
-
-                    String intermediateFirst = domainForeignKey.substring(domainForeignKey.indexOf("==") + 2).trim();
-                    String intermediateSecond = rangePrimaryKey.substring(0, rangePrimaryKey.indexOf("==")).trim();
-
-                    domainForeignKey = domainForeignKey.substring(0, domainForeignKey.indexOf("==")).trim();
-                    rangePrimaryKey = rangePrimaryKey.substring(rangePrimaryKey.indexOf("==") + 2).trim();
-
-                    for (Link link : domain.createLinkContexts(this, domainForeignKey, rangePrimaryKey,
-                            intermediateFirst, intermediateSecond, node_inside)) {
-                        link.range.link();
-                    }
-
-                }
-            } else if (pathSource.contains("==")) {
-
-                int equals = pathSource.indexOf("==");
-                if (equals >= 0) {
-                    String domainForeignKey = pathSource.substring(0, equals).trim();
-                    String rangePrimaryKey = pathSource.substring(equals + 2).trim();
-                        for (Link link : domain.createLinkContexts(this, domainForeignKey, rangePrimaryKey)) {
-                            link.range.link();
-                        }
-                }
-            } 
-            else {
+//            if (this.path.source_relation.node != null) {
+//                node_inside = this.path.source_relation.node.expression;
+//
+//                int equals = pathSource.indexOf("==");
+//
+//                if (equals >= 0) {
+//
+//                    String domainForeignKey = pathSource.trim();
+//                    String rangePrimaryKey = pathSource2.trim();
+//
+//                    String intermediateFirst = domainForeignKey.substring(domainForeignKey.indexOf("==") + 2).trim();
+//                    String intermediateSecond = rangePrimaryKey.substring(0, rangePrimaryKey.indexOf("==")).trim();
+//
+//                    domainForeignKey = domainForeignKey.substring(0, domainForeignKey.indexOf("==")).trim();
+//                    rangePrimaryKey = rangePrimaryKey.substring(rangePrimaryKey.indexOf("==") + 2).trim();
+//
+//                    for (Link link : domain.createLinkContexts(this, domainForeignKey, rangePrimaryKey,
+//                            intermediateFirst, intermediateSecond, node_inside)) {
+//                        link.range.link();
+//                    }
+//
+//                }
+//            } else if (pathSource.contains("==")) {
+//
+//                int equals = pathSource.indexOf("==");
+//                if (equals >= 0) {
+//                    String domainForeignKey = pathSource.substring(0, equals).trim();
+//                    String rangePrimaryKey = pathSource.substring(equals + 2).trim();
+//                        for (Link link : domain.createLinkContexts(this, domainForeignKey, rangePrimaryKey)) {
+//                            link.range.link();
+//                        }
+//                }
+//            } 
+//            else {
                 try{
                     for (Path path : domain.createPathContexts(this.path)) {
                         if(X3MLEngine.inputType==INPUT_TYPE.XML){
@@ -211,7 +215,7 @@ public interface X3ML {
                         X3MLEngine.exceptionMessagesList+=ex.toString();
                         Utils.printErrorMessages("ERROR FOUND: "+ex.toString());
                 }
-            }
+//            }
         }
         
         public boolean skipLink(){
@@ -340,9 +344,10 @@ public interface X3ML {
     public class SourceRelation extends Visible {
 
         @XStreamImplicit
+        public List<Source> node;
+        
+        @XStreamImplicit
         public List<Relation> relation;
-          
-        public Source node;
     }
     
     @XStreamAlias("source_path")

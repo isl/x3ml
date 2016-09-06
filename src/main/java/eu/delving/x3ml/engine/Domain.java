@@ -109,9 +109,9 @@ public class Domain extends GeneratorContext {
 
         String rangeExpression = rangeElement.source_node.expression;
 
-        if (rangeExpression == null) {
-            throw exception("Range source absent: " + linkElement);
-        }
+//        if (rangeExpression == null) {
+//            throw exception("Range source absent: " + linkElement);
+//        }
         List<Link> links = new ArrayList<Link>();
         int index = 1;
 
@@ -169,30 +169,39 @@ public class Domain extends GeneratorContext {
 
         String pathExpression = pathElement.source_relation.relation.get(0).expression;
         RangeElement rangeElement = linkElement.range;
-        String rangeExpression = rangeElement.source_node.expression;
-        if (rangeExpression == null) {
-            throw exception("Range source absent: " + linkElement);
-        }
+
+
+        
+
         List<Link> links = new ArrayList<Link>();
-        int index = 1;
-        List<Node> rangeNodes = context.input().rootNodeList(
-                domain.source_node.expression,
-                pathExpression,
-                context.input().valueAt(node, domainForeignKey + "/text()"),
-                rangeExpression,
-                rangePrimaryKey + "/text()"
-        );
-        for (Node rangeNode : rangeNodes) {
-            Path path = new Path(context, this, pathElement, node, index);
-            Range range = new Range(context, path, rangeElement, rangeNode, index);
+        
+        if(X3MLEngine.inputType==INPUT_TYPE.XML){
             
-            GeneratorContext.appendAssociationTable(path.toStringAssoc()+"/"+domainForeignKey+"=="+range.toStringAssoc()+"/"+rangePrimaryKey+"-FOREIGNKEY", context.input().valueAt(rangeNode, rangePrimaryKey + "/text()"));
-            
-            Link link = new Link(path, range);
-            if (link.resolve()) {
-                links.add(link);
+            String rangeExpression = rangeElement.source_node.expression;
+            if (rangeExpression == null) {
+                throw exception("Range source absent: " + linkElement);
+            }    
+        
+            int index = 1;
+            List<Node> rangeNodes = context.input().rootNodeList(
+                    domain.source_node.expression,
+                    pathExpression,
+                    context.input().valueAt(node, domainForeignKey + "/text()"),
+                    rangeExpression,
+                    rangePrimaryKey + "/text()"
+            );
+            for (Node rangeNode : rangeNodes) {
+                Path path = new Path(context, this, pathElement, node, index);
+                Range range = new Range(context, path, rangeElement, rangeNode, index);
+
+                GeneratorContext.appendAssociationTable(path.toStringAssoc()+"/"+domainForeignKey+"=="+range.toStringAssoc()+"/"+rangePrimaryKey+"-FOREIGNKEY", context.input().valueAt(rangeNode, rangePrimaryKey + "/text()"));
+
+                Link link = new Link(path, range);
+                if (link.resolve()) {
+                    links.add(link);
+                }
+                index++;
             }
-            index++;
         }
         return links;
     }
@@ -211,7 +220,7 @@ public class Domain extends GeneratorContext {
                 }
             }
         }else{
-            for (Resource resource : contextRDF.input().getResourcesForPath(this.modelInput, resource, path.source_relation.relation.get(0).expression)) {
+            for (Resource resource : contextRDF.input().getResourcesForPath(this.modelInput, resource, path.source_relation)) {
                 Path pathContext = new Path(contextRDF, this, path, resource, index++);
                 if (pathContext.resolve()) {
                     paths.add(pathContext);

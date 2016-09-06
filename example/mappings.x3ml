@@ -11,12 +11,12 @@
 			<domain>
 				<source_path>
 					<node>http://www.cidoc-crm.org/cidoc-crm/Coin</node>
-					<relation>http://www.cidoc-crm.org/cidoc-crm/has_id</relation>
+					<!--<relation>http://www.cidoc-crm.org/cidoc-crm/has_id</relation>
 					<node>http://www.cidoc-crm.org/cidoc-crm/Id</node> 
 					<relation>http://www.cidoc-crm.org/cidoc-crm/has_id2</relation>
 					<node>http://www.cidoc-crm.org/cidoc-crm/Id2</node> 
 					<relation>http://www.cidoc-crm.org/cidoc-crm/has_id2</relation>
-					<node>http://www.cidoc-crm.org/cidoc-crm/Id3</node> 
+					<node>http://www.cidoc-crm.org/cidoc-crm/Id3</node> -->
 				</source_path>
 				<target_node>
 					<entity>
@@ -25,25 +25,34 @@
 					</entity>
 				</target_node>			
 			</domain>
-		   <!-- <link>
+		    <link>
                 <path>
-                    <source_relation><relation>http://www.cidoc-crm.org/cidoc-crm/has_value</relation></source_relation>
+                    <source_relation>
+						<relation>http://www.cidoc-crm.org/cidoc-crm/has_id</relation>
+						<node>http://www.cidoc-crm.org/cidoc-crm/Id</node> 
+						<relation>http://www.cidoc-crm.org/cidoc-crm/has_id2</relation>
+					
+					</source_relation>
                     <target_relation>
 						<relationship>crm:L4_has_preferred_label</relationship>
                     </target_relation>
                 </path>
                 <range>
-                    <source_node>http://www.cidoc-crm.org/cidoc-crm/Value </source_node>
+                    <source_path>
+						<node>http://www.cidoc-crm.org/cidoc-crm/Id2</node> 
+						<relation>http://www.cidoc-crm.org/cidoc-crm/has_id3</relation>
+						<node>http://www.cidoc-crm.org/cidoc-crm/Id3</node>
+					</source_path>
              
                       <target_node>
-                        <entity variable="v1">
+                        <entity>
                             <type>crm:E_Value</type>
-                            <instance_generator name="UUID"/>
+                            <instance_generator name="existingURI"/>
                         </entity>
                     </target_node>
                 </range>
             </link>
-			<link>
+			<!--<link>
                 <path>
                     <source_relation><relation>http://www.cidoc-crm.org/cidoc-crm/has_id</relation></source_relation>
                     <target_relation>
@@ -54,9 +63,9 @@
                     <source_node>http://www.cidoc-crm.org/cidoc-crm/Id</source_node>
              
                       <target_node>
-                        <entity variable="v1">
+                        <entity>
                             <type>crm:D_Value</type>
-							<instance_generator name="UUID"/>
+							<instance_generator name="existingURI"/>
                         </entity>
                     </target_node>
                 </range>

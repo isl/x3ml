@@ -54,7 +54,8 @@
 													<xs:element name="range">
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element ref="source_node"/>
+																<xs:element ref="source_node" minOccurs="0"/>
+																<xs:element ref="source_path" minOccurs="0" type="source_path_type"> </xs:element>
 																<xs:element name="target_node" type="range_target_nodeType"/>
 																<xs:element name="comments" type="commentsType" minOccurs="0"/>
 															</xs:sequence>

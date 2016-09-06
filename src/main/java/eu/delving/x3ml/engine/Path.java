@@ -111,9 +111,9 @@ public class Path extends GeneratorContext {
     }
 
     public List<Range> createRangeContexts(RangeElement range) {
-        if (range.source_node == null) {
-            throw exception("Range source absent: " + range);
-        }
+//        if (range.source_node == null) {
+//            throw exception("Range source absent: " + range);
+//        }
         String expression = path.source_relation.relation.get(0).expression;
         if (range.source_node.expression.equals(expression)) {
             expression = "";
@@ -131,15 +131,15 @@ public class Path extends GeneratorContext {
     }
     
     public List<Range> createRangeContexts(Model modelInput,RangeElement range) {
-        if (range.source_node == null) {
-            throw exception("Range source absent: " + range);
-        }
+//        if (range.source_node == null) {
+//            throw exception("Range source absent: " + range);
+//        }
         //It compares the expression in the Path with the expression in the Range
-        String expression = path.source_relation.relation.get(0).expression;
-        if (range.source_node.expression.equals(expression)) {
-            expression = "";
-        }
-        List<Resource> rangeNodes = contextRDF.input().getResourcesForRange(modelInput, domain.resource, expression, range.source_node.expression);
+//        String expression = path.source_relation.relation.get(0).expression;
+//        if (range.source_node.expression.equals(expression)) {
+//            expression = "";
+//        }
+        List<Resource> rangeNodes = contextRDF.input().getResourcesForRange(modelInput, domain.resource, path.source_relation, range.source_path);
         System.out.println("FINAL RANGE RES: "+rangeNodes);
 
         List<Range> ranges = new ArrayList<Range>();
