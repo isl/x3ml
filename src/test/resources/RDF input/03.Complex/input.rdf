@@ -1,0 +1,21 @@
+<rdf:RDF
+        xmlns:lch="http://localhost/schema/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+	<lch:Coin rdf:about="http://localhost/coin1">
+		<lch:has_identifier_1>
+			<lch:Identifier_1 rdf:about="http://localhost/Identifier_001">
+				<lch:has_identifier_2>
+					<lch:Identifier_2 rdf:about="http://localhost/Identifier_002">
+						<lch:has_identifier_3>
+							<lch:Identifier_3 rdf:about="http://localhost/Identifier_003"/>
+						</lch:has_identifier_3>
+					</lch:Identifier_2>
+				</lch:has_identifier_2>
+				<rdfs:label>Identifier 1</rdfs:label>
+			</lch:Identifier_1>
+		</lch:has_identifier_1>
+		<rdfs:label>Coin 1</rdfs:label>
+	</lch:Coin>
+	<lch:Coin rdf:about="http://localhost/coin2"/>
+</rdf:RDF>

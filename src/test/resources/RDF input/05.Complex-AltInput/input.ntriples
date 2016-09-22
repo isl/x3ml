@@ -1,0 +1,9 @@
+<http://localhost/coin1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://localhost/schema/Coin> . 
+<http://localhost/coin1> <http://www.w3.org/2000/01/rdf-schema#label> "Coin 1" . 
+<http://localhost/coin1> <http://localhost/schema/has_identifier_1> <http://localhost/Identifier_001> . 
+<http://localhost/Identifier_001> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://localhost/schema/Identifier_1> . 
+<http://localhost/Identifier_001> <http://www.w3.org/2000/01/rdf-schema#label> "Identifier 1" . 
+<http://localhost/Identifier_001> <http://localhost/schema/has_identifier_2> <http://localhost/Identifier_002> . 
+<http://localhost/Identifier_002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://localhost/schema/Identifier_2> . 
+<http://localhost/Identifier_002> <http://localhost/schema/has_identifier_3> <http://localhost/Identifier_003> . 
+<http://localhost/Identifier_003> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://localhost/schema/Identifier_3> .
