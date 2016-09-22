@@ -18,6 +18,8 @@ under the License.
 ==============================================================================*/
 package eu.delving.x3ml;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.util.FileManager;
 import eu.delving.x3ml.engine.Generator;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -37,11 +39,8 @@ import java.io.PrintStream;
 import java.util.List;
 import static eu.delving.x3ml.X3MLEngine.exception;
 import eu.delving.x3ml.engine.GeneratorContext;
-import gr.forth.Utils;
 import gr.forth.ics.isl.x3ml_reverse_utils.AssociationTableResources;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Using commons-cli to make the engine usable on the command line.
@@ -169,6 +168,10 @@ public class X3MLCommandLine {
     static Element xml(File file) {
         return xml(getStream(file));
     }
+    
+    public static Model model(String path){
+        return FileManager.get().loadModel(path);
+    }
 
     static FileInputStream getStream(File file) {
         try {
@@ -203,24 +206,25 @@ public class X3MLCommandLine {
     }
 
     static void go(String xml, String x3ml, String policy, String rdf, String rdfFormat, String assocTableFilename, boolean mergeAssocTableWithRDF, boolean validate, int uuidTestSize) {
-        Element xmlElement;
-        if ("@".equals(xml)) {
-            xmlElement = xml(System.in);
-        }
-        else if(xml.contains(",")){
-            Set<InputStream> listOfStreams=new HashSet<>();
-            try{
-                for(String filePath : xml.split(",")){
-                    listOfStreams.add(new FileInputStream(new File(filePath)));
-                }
-                xmlElement=Utils.parseMultipleXMLFiles(listOfStreams);
-            }catch(FileNotFoundException ex){
-                throw exception("Cannot find input files",ex);
-            }
-        }
-        else{
-            xmlElement = xml(file(xml));
-        }
+        Model inputModel=model(xml);
+//        Element xmlElement;
+//        if ("@".equals(xml)) {
+//            xmlElement = xml(System.in);
+//        }
+//        else if(xml.contains(",")){
+//            Set<InputStream> listOfStreams=new HashSet<>();
+//            try{
+//                for(String filePath : xml.split(",")){
+//                    listOfStreams.add(new FileInputStream(new File(filePath)));
+//                }
+//                xmlElement=Utils.parseMultipleXMLFiles(listOfStreams);
+//            }catch(FileNotFoundException ex){
+//                throw exception("Cannot find input files",ex);
+//            }
+//        }
+//        else{
+//            xmlElement = xml(file(xml));
+//        }
         InputStream x3mlStream;
         if ("@".equals(x3ml)) {
             if (validate) {
@@ -242,8 +246,13 @@ public class X3MLCommandLine {
             x3mlStream = getStream(file(x3ml));
         }
         X3MLEngine engine = X3MLEngine.load(x3mlStream);
+        /* This is being used for the XML input */
+//        X3MLEngine.Output output = engine.execute(
+//                xmlElement,
+//                getValuePolicy(policy, X3MLGeneratorPolicy.createUUIDSource(uuidTestSize))
+//        );
         X3MLEngine.Output output = engine.execute(
-                xmlElement,
+                inputModel,
                 getValuePolicy(policy, X3MLGeneratorPolicy.createUUIDSource(uuidTestSize))
         );
         if(assocTableFilename!=null){
