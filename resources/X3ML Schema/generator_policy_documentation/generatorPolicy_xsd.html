@@ -16,7 +16,9 @@
 				'properties_custom_custom_set-arg_name', 
 				'properties_custom_custom_set-arg_type', 
 				'properties_custom_generatorClass', 
-				'properties_generator_name');
+				'properties_generator_name', 
+				'properties_generator_type');
+var facetsBoxes= new Array('facets_generator_type');
 var usedByBoxes= new Array('usedBy_generator', 
 				'usedBy_pattern', 
 				'usedBy_custom', 
@@ -311,6 +313,9 @@ var modelBoxes= new Array('model_generator_policy',
                         <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, diagramBoxes);" class="control" /></span><span class="globalControlName">Diagrams</span></td>
                      </tr>
                      <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, facetsBoxes);" class="control" /></span><span class="globalControlName">Facets </span></td>
+                     </tr>
+                     <tr>
                         <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, identityConstraintsBoxes);" class="control" /></span><span class="globalControlName">Identity Constraints</span></td>
                      </tr>
                      <tr>
@@ -521,10 +526,10 @@ var modelBoxes= new Array('model_generator_policy',
                                  <area alt="generatorPolicy_xsd.tmp#generator_prefix" href="generatorPolicy_xsd.html#generator_prefix" coords="120,76,187,101" />
                                  <area alt="generatorPolicy_xsd.tmp#generator_shorten" href="generatorPolicy_xsd.html#generator_shorten" coords="120,111,196,136" />
                                  <area alt="generatorPolicy_xsd.tmp#generator_uuid" href="generatorPolicy_xsd.html#generator_uuid" coords="120,146,179,171" />
-                                 <area alt="generatorPolicy_xsd.tmp#generator_type" href="generatorPolicy_xsd.html#generator_type" coords="120,181,180,206" />
-                                 <area alt="generatorPolicy_xsd.tmp#pattern" href="generatorPolicy_xsd.html#pattern" coords="248,223,420,267" />
-                                 <area alt="generatorPolicy_xsd.tmp#custom" href="generatorPolicy_xsd.html#custom" coords="248,277,314,302" />
-                                 <area alt="generatorPolicy_xsd.tmp#description" href="generatorPolicy_xsd.html#description" coords="177,312,349,356" /></map></div>
+                                 <area alt="generatorPolicy_xsd.tmp#generator_type" href="generatorPolicy_xsd.html#generator_type" coords="120,181,296,225" />
+                                 <area alt="generatorPolicy_xsd.tmp#pattern" href="generatorPolicy_xsd.html#pattern" coords="248,242,420,286" />
+                                 <area alt="generatorPolicy_xsd.tmp#custom" href="generatorPolicy_xsd.html#custom" coords="248,296,314,321" />
+                                 <area alt="generatorPolicy_xsd.tmp#description" href="generatorPolicy_xsd.html#description" coords="177,331,349,375" /></map></div>
                         </td>
                      </tr>
                      <tr>
@@ -631,7 +636,7 @@ var modelBoxes= new Array('model_generator_policy',
                                  </tr>
                                  <tr>
                                     <td class="firstColumn"><b><a href="generatorPolicy_xsd.html#generator_type" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for generatorPolicy.xsd')">type</a></b></td>
-                                    <td></td>
+                                    <td>restriction of <b>xs:string</b></td>
                                     <td>optional</td>
                                     <td>
                                        <div class="annotation"></div>
@@ -671,7 +676,15 @@ var modelBoxes= new Array('model_generator_policy',
     </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"prefix"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"shorten"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"uuid"</span><span class="tEl">/&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"type"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"type"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:simpleType</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:restriction</span><span class="tAN"> base=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"any"</span><span class="tEl">/&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"instance"</span><span class="tEl">/&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"label"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/xs:restriction&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:simpleType&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
                                  </tr>
@@ -1622,6 +1635,59 @@ var modelBoxes= new Array('model_generator_policy',
                         <td>No namespace</td>
                      </tr>
                      <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td>restriction of <b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_generator_type" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_generator_type');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="properties_generator_type" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;">content</td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Facets</b></div>
+                           <div class="floatRight"><input id="button_facets_generator_type" type="image" src="img/btM.gif" value="-" onclick="switchState('facets_generator_type');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="facets_generator_type" style="display:block">
+                              <table class="facetsTable">
+                                 <tr>
+                                    <td class="firstColumn">enumeration</td>
+                                    <td width="30%"><b>any</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn">enumeration</td>
+                                    <td width="30%"><b>instance</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn">enumeration</td>
+                                    <td width="30%"><b>label</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
                         <td class="firstColumn">
                            <div class="floatLeft"><b>Used by</b></div>
                            <div class="floatRight"><input id="button_usedBy_generator_type" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_generator_type');" class="control" /></div>
@@ -1646,7 +1712,15 @@ var modelBoxes= new Array('model_generator_policy',
                            <div id="source_generator_type" style="display:block">
                               <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                  <tr>
-                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"type"</span><span class="tEl">/&gt;</span></pre></td>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"type"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:simpleType</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:restriction</span><span class="tAN"> base=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"any"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"instance"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"label"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:restriction&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:simpleType&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
                                  </tr>
                               </table>
                            </div>

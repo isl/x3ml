@@ -26,7 +26,15 @@
             <xs:attribute name="prefix"/>
             <xs:attribute name="shorten"/>
             <xs:attribute name="uuid"/>
-            <xs:attribute name="type"/>
+            <xs:attribute name="type">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="any" />
+                        <xs:enumeration value="instance" />
+                        <xs:enumeration value="label" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 
