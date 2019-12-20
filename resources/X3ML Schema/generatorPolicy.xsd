@@ -26,6 +26,7 @@
             <xs:attribute name="prefix"/>
             <xs:attribute name="shorten"/>
             <xs:attribute name="uuid"/>
+            <xs:attribute name="type"/>
         </xs:complexType>
     </xs:element>
 

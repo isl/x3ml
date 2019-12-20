@@ -27,7 +27,8 @@ var usedByBoxes= new Array('usedBy_generator',
 				'usedBy_generator_name', 
 				'usedBy_generator_prefix', 
 				'usedBy_generator_shorten', 
-				'usedBy_generator_uuid');
+				'usedBy_generator_uuid', 
+				'usedBy_generator_type');
 var sourceBoxes= new Array('source_generator_policy', 
 				'source_generator', 
 				'source_pattern', 
@@ -40,7 +41,8 @@ var sourceBoxes= new Array('source_generator_policy',
 				'source_generator_name', 
 				'source_generator_prefix', 
 				'source_generator_shorten', 
-				'source_generator_uuid');
+				'source_generator_uuid', 
+				'source_generator_type');
 var instanceBoxes= new Array('instance_generator_policy', 
 				'instance_generator', 
 				'instance_custom');
@@ -450,7 +452,7 @@ var modelBoxes= new Array('model_generator_policy',
                               <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                  <tr>
                                     <td width="100%"><pre><span class="tEl">&lt;generator_policy</span><span class="tEl">&gt;</span><span class="tI">
-  </span><span class="tEl">&lt;generator</span><span class="tT"> </span><span class="tAN">name=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">prefix=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">shorten=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">uuid=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,unbounded}</span><span class="tEl">&lt;/generator&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;generator</span><span class="tT"> </span><span class="tAN">name=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">prefix=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">shorten=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">type=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">uuid=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,unbounded}</span><span class="tEl">&lt;/generator&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/generator_policy&gt;</span></pre></td>
                                  </tr>
                               </table>
@@ -519,9 +521,10 @@ var modelBoxes= new Array('model_generator_policy',
                                  <area alt="generatorPolicy_xsd.tmp#generator_prefix" href="generatorPolicy_xsd.html#generator_prefix" coords="120,76,187,101" />
                                  <area alt="generatorPolicy_xsd.tmp#generator_shorten" href="generatorPolicy_xsd.html#generator_shorten" coords="120,111,196,136" />
                                  <area alt="generatorPolicy_xsd.tmp#generator_uuid" href="generatorPolicy_xsd.html#generator_uuid" coords="120,146,179,171" />
-                                 <area alt="generatorPolicy_xsd.tmp#pattern" href="generatorPolicy_xsd.html#pattern" coords="248,188,420,232" />
-                                 <area alt="generatorPolicy_xsd.tmp#custom" href="generatorPolicy_xsd.html#custom" coords="248,242,314,267" />
-                                 <area alt="generatorPolicy_xsd.tmp#description" href="generatorPolicy_xsd.html#description" coords="177,277,349,321" /></map></div>
+                                 <area alt="generatorPolicy_xsd.tmp#generator_type" href="generatorPolicy_xsd.html#generator_type" coords="120,181,180,206" />
+                                 <area alt="generatorPolicy_xsd.tmp#pattern" href="generatorPolicy_xsd.html#pattern" coords="248,223,420,267" />
+                                 <area alt="generatorPolicy_xsd.tmp#custom" href="generatorPolicy_xsd.html#custom" coords="248,277,314,302" />
+                                 <area alt="generatorPolicy_xsd.tmp#description" href="generatorPolicy_xsd.html#description" coords="177,312,349,356" /></map></div>
                         </td>
                      </tr>
                      <tr>
@@ -576,7 +579,7 @@ var modelBoxes= new Array('model_generator_policy',
                            <div id="instance_generator" style="display:block">
                               <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                  <tr>
-                                    <td width="100%"><pre><span class="tEl">&lt;generator</span><span class="tT"> </span><span class="tAN">name=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">prefix=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">shorten=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">uuid=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tI">
+                                    <td width="100%"><pre><span class="tEl">&lt;generator</span><span class="tT"> </span><span class="tAN">name=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">prefix=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">shorten=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">type=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">uuid=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;pattern</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/pattern&gt;</span><span class="tI">
   </span><span class="tEl">&lt;custom</span><span class="tT"> </span><span class="tAN">generatorClass=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/custom&gt;</span><span class="tI">
   </span><span class="tEl">&lt;description</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/description&gt;</span><span class="tI">
@@ -627,6 +630,14 @@ var modelBoxes= new Array('model_generator_policy',
                                     </td>
                                  </tr>
                                  <tr>
+                                    <td class="firstColumn"><b><a href="generatorPolicy_xsd.html#generator_type" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for generatorPolicy.xsd')">type</a></b></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                                 <tr>
                                     <td class="firstColumn"><b><a href="generatorPolicy_xsd.html#generator_uuid" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for generatorPolicy.xsd')">uuid</a></b></td>
                                     <td></td>
                                     <td>optional</td>
@@ -660,6 +671,7 @@ var modelBoxes= new Array('model_generator_policy',
     </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"prefix"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"shorten"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"uuid"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"type"</span><span class="tEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
                                  </tr>
@@ -1593,10 +1605,67 @@ var modelBoxes= new Array('model_generator_policy',
             <td class="rt_lineBottom"></td>
             <td class="rt_cornerBottomRight"></td>
          </tr>
+      </table><a id="generator_type"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="generatorPolicy_xsd.html#generator" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for generatorPolicy.xsd')">generator</a></b> / @type</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_generator_type" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_generator_type');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_generator_type" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn">Element </td>
+                                    <td><b><a href="generatorPolicy_xsd.html#generator" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for generatorPolicy.xsd')">generator</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_generator_type" type="image" src="img/btM.gif" value="-" onclick="switchState('source_generator_type');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="source_generator_type" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"type"</span><span class="tEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
       </table>
       <div class="footer">
          <hr />
-         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Developer.
+         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor.
          </div>
       </div><script type="text/javascript">
          <!--
