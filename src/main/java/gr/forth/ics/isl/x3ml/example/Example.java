@@ -46,7 +46,7 @@ public class Example {
         final String GENERATOR_POLICY_PATH="example/generator-policy.xml";  //if empty, the generator will not be used
         final String INPUT_PATH="example/input.xml";
         final String ASSOCIATION_TABLE_PATH=""; ////if empty, the generator will not be used
-        final int UUID_SIZE=2;
+        final int UUID_SIZE=0;
         final Pair<String,Lang> terminology=Pair.of("example/terms.nt", Lang.NT);   //if empty it will not be used
         final outputFormat OUT_FORMAT=outputFormat.RDF_XML;
         final outputStream OUT_STREAM=outputStream.SYSTEM_OUT;
@@ -138,7 +138,7 @@ public class Example {
     
     private static Element document(String path) {
         try {
-            return documentBuilderFactory().newDocumentBuilder().parse(path).getDocumentElement();
+            return documentBuilderFactory().newDocumentBuilder().parse(new File(path)).getDocumentElement();
         }
         catch (Exception e) {
             throw exception("Unable to parse " + path+"\n"+e.toString());
