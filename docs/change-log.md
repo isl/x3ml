@@ -1,8 +1,9 @@
 # Change Log
 
 
-## 18 November 2019: V 1.9.4 (by FORTH-ICS)
+## 17 July 2020: V 1.9.4 (by FORTH-ICS)
 * Generator Policy file validation ([issue #138](https://github.com/isl/x3ml/issues/138))
+* Implementioned og MultiHashGenerator ([issue #140](https://github.com/isl/x3ml/issues/140))
 
 
 ## 2 September 2019: V 1.9.3 (by FORTH-ICS)

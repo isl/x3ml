@@ -1,0 +1,35 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:crm="http://www.cidoc-crm.org/cidoc-crm/"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:ex="http://www.example.com/">
+  <crm:E22_Man-Made_Object rdf:about="http://www.example.com/coin/3644A684-F98E-38FE-A23C-713B77189A77">
+    <crm:P1_is_identified_by>
+      <crm:E41_Appellation rdf:about="http://www.example.com/coin/3644A684-F98E-38FE-A23C-713B77189A77/name/236320AE-403C-3D32-A028-47D244CDA88D">
+        <rdfs:label>coin_local_identifier-coin_local_name c200</rdfs:label>
+      </crm:E41_Appellation>
+    </crm:P1_is_identified_by>
+  </crm:E22_Man-Made_Object>
+  <crm:E22_Man-Made_Object rdf:about="http://www.example.com/coin/F899139D-F5E1-3593-9643-1415E770C6DD">
+    <crm:P1_is_identified_by>
+      <crm:E41_Appellation rdf:about="http://www.example.com/coin/F899139D-F5E1-3593-9643-1415E770C6DD/name/DED33742-B286-3519-81CD-603BCC78EE05">
+        <rdfs:label>coin_local_identifier-coin_local_name c100</rdfs:label>
+      </crm:E41_Appellation>
+    </crm:P1_is_identified_by>
+  </crm:E22_Man-Made_Object>
+  <crm:E22_Man-Made_Object rdf:about="http://www.example.com/coin/94F6D7E0-4A4D-3520-B530-0F18B984988C">
+    <crm:P1_is_identified_by>
+      <crm:E41_Appellation rdf:about="http://www.example.com/coin/94F6D7E0-4A4D-3520-B530-0F18B984988C/name/576E4718-FFF7-3950-8D23-6FB24D8664C9">
+        <rdfs:label>coin_local_identifier-coin_local_name c300</rdfs:label>
+      </crm:E41_Appellation>
+    </crm:P1_is_identified_by>
+  </crm:E22_Man-Made_Object>
+  <crm:E22_Man-Made_Object rdf:about="http://www.example.com/coin/E27D0E9B-8189-366C-8C75-692C4B11D176">
+    <crm:P1_is_identified_by>
+      <crm:E41_Appellation rdf:about="http://www.example.com/coin/E27D0E9B-8189-366C-8C75-692C4B11D176/name/576E4718-FFF7-3950-8D23-6FB24D8664C9">
+        <rdfs:label>coin_local_identifier-coin_local_name c300</rdfs:label>
+      </crm:E41_Appellation>
+    </crm:P1_is_identified_by>
+  </crm:E22_Man-Made_Object>
+</rdf:RDF>
