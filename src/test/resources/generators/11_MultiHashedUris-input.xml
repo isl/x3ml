@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot>
+    <COIN>
+        <ID>100</ID>
+		<NAME>coin_local_identifier-coin_local_name c100</NAME>
+    </COIN>
+    <COIN>
+        <ID>200</ID>
+		<NAME>coin_local_identifier-coin_local_name c200</NAME>
+    </COIN>
+    <COIN>
+        <ID>300</ID>
+		<NAME>coin_local_identifier-coin_local_name c300</NAME>
+    </COIN>	
+	<COIN>
+        <ID>300-clone</ID>
+		<NAME>coin_local_identifier-coin_local_name c300</NAME>
+    </COIN>	
+</dataroot>

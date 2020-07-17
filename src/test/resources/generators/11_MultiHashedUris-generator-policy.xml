@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generator_policy>
+    
+	 <generator name="LocalTermURI" prefix="ex" shorten="true">
+        <pattern>{hierarchy}/{object}</pattern>
+    </generator>
+	
+	<generator name="MultiHashingGenerator" prefix="ex">
+        <custom generatorClass="gr.forth.MultiHashingGenerator">
+            <set-arg name="hierarchy"/>
+			<set-arg name="object_HASHED_CONTENTS"/>
+			<set-arg name="term_simple"/>
+			<set-arg name="term_HASHED_CONTENTS"/>
+        </custom>
+    </generator>
+	
+	<generator name="MultiHashingGenerator_random" prefix="ex">
+        <custom generatorClass="gr.forth.MultiHashingGenerator">
+            <set-arg name="hierarchy"/>
+			<set-arg name="object_HASHED_CONTENTS"/>
+			<set-arg name="term_simple"/>
+			<set-arg name="term_RANDOM_UUID"/>
+        </custom>
+    </generator>
+	
+</generator_policy>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x3ml version="1.0" source_type="xpath">
+    <namespaces>
+        <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
+        <namespace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        <namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
+		<namespace prefix="ex" uri="http://www.example.com/"/>
+    </namespaces>
+    <mappings>
+        <mapping>
+            <domain>
+                <source_node>//COIN</source_node>
+                <target_node>
+                    <entity>
+                        <type>crm:E22_Man-Made_Object</type>
+                        <instance_generator name="LocalTermURI">
+							<arg name="hierarchy" type="constant">coin</arg>
+							<arg name="object" type="xpath">ID/text()</arg>
+						</instance_generator>
+                    </entity>
+                </target_node>
+            </domain>
+			<link>
+                <path>
+                    <source_relation><relation>NAME</relation></source_relation>
+                    <target_relation>
+                        <relationship>crm:P1_is_identified_by</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>NAME</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E41_Appellation</type>
+                            <instance_generator name="MultiHashingGenerator">
+								<arg name="hierarchy" type="constant">coin</arg>
+								<arg name="object_HASHED_CONTENTS" type="xpath">../ID/text()</arg>
+								<arg name="term_simple" type="constant">name</arg>
+								<arg name="term_HASHED_CONTENTS" type="xpath">text()</arg>
+							</instance_generator>
+							<label_generator name="Literal">
+								<arg name="text" type="xpath">text()</arg>
+							</label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+        </mapping>
+    </mappings>
+</x3ml>
