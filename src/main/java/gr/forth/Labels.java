@@ -69,6 +69,10 @@ public class Labels {
     public static final String XML="xml";
     public static final String YES="YES";
     
+    /* Custom Generator labels */
+    public static final String _HASHED_CONTENTS="_HASHED_CONTENTS";
+    public static final String _RANDOM_UUID="_RANDOM_UUID";
+    
     /* Namespaces */
     public static final String RDF_NAMESPACE="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     public static final String RDFS_NAMESPACE="http://www.w3.org/2000/01/rdf-schema#";
