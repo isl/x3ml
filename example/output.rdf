@@ -1,0 +1,14 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:adw="http://www.adw.com/"
+    xmlns:xsd="http://www.xsd.com"
+    xmlns:crm="http://www.cidoc-crm.org/cidoc-crm/"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <crm:E22_Man-Made_Object rdf:about="urn:uuid:4bdcb2f2-8a64-48ea-815a-2e75c934de74">
+    <crm:has_note>100</crm:has_note>
+  </crm:E22_Man-Made_Object>
+  <crm:E22_Man-Made_Object rdf:about="urn:uuid:12477304-04f8-4d7b-bf35-ab0edc0bb2f8">
+    <crm:has_note>100</crm:has_note>
+  </crm:E22_Man-Made_Object>
+</rdf:RDF>
