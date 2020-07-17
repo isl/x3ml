@@ -53,17 +53,17 @@
         <repository>
             <id>FORTH-ISL-releases</id>
             <name>FORTH ISL Nexus repository - Releases</name>
-            <url>http://www.ics.forth.gr/isl/maven-releases/</url>
+            <url>https://isl.ics.forth.gr/maven-releases/</url>
         </repository>
         <repository>
             <id>FORTH-ISL-third-party</id>
             <name>FORTH ISL Nexus repository - third party releases</name>
-            <url>http://www.ics.forth.gr/isl/maven-third-party/</url>
+            <url>https://isl.ics.forth.gr/maven-third-party/</url>
         </repository>
         <repository>
             <id>FORTH-ISL-snapshots</id>
             <name>FORTH ISL Nexus repository - Snapshots</name>
-            <url>http://www.ics.forth.gr/isl/maven-snapshots/</url>
+            <url>https://isl.ics.forth.gr/maven-snapshots/</url>
         </repository>
     </repositories>
     
@@ -71,12 +71,12 @@
         <repository>
             <id>FORTH-ISL-releases</id>
             <name>FORTH ISL Nexus repository - Releases</name>
-            <url>http://www.ics.forth.gr/isl/maven-releases/</url>
+            <url>https://isl.ics.forth.gr/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>FORTH-ISL-snapshots</id>
             <name>FORTH ISL Nexus repository - Snapshots</name>
-            <url>http://www.ics.forth.gr/isl/maven-snapshots/</url>
+            <url>https://isl.ics.forth.gr/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     
