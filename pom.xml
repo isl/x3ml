@@ -10,7 +10,7 @@
     <artifactId>x3ml-engine</artifactId>
     <packaging>jar</packaging>
     <name>X3ML-Engine</name>
-    <version>1.9.4-SNAPSHOT</version>
+    <version>1.9.5-SNAPSHOT</version>
     
     <inceptionYear>2013</inceptionYear>
     <organization>
