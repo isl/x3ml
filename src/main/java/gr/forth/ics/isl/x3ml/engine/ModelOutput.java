@@ -247,16 +247,21 @@ public class ModelOutput implements Output {
     public void writeQuads(OutputStream out){
         StmtIterator stIter=model.listStatements();
         String defaultGraphSpace="http://default";
-        if(X3ML.Mappings.namedgraphProduced!=null && !X3ML.Mappings.namedgraphProduced.isEmpty()){
-            defaultGraphSpace=X3ML.Mappings.namedgraphProduced;
-        }
-//        if(!defaultGraphSpace.equals("http://default")){ //namespaces are used
+        if(quadGraph.isEmpty()){    // No namedgraphs were used, so output everything from the triples model in the quadGraph to export it in TRIG format
             Node defgraph=new ResourceImpl(defaultGraphSpace).asNode();
             while(stIter.hasNext()){
                 Statement st=stIter.next();
                 quadGraph.add(defgraph, st.getSubject().asNode(), st.getPredicate().asNode(), st.getObject().asNode());
             } 
-//        }
+        }else{  // There are namedgraphs, So export in the default graph only those triples that are not assigned any namedgraph
+            Node defgraph=new ResourceImpl(defaultGraphSpace).asNode();
+            while(stIter.hasNext()){
+                Statement st=stIter.next();
+                if(!quadGraph.contains(null,st.getSubject().asNode(), st.getPredicate().asNode(), st.getObject().asNode())){
+                    quadGraph.add(defgraph, st.getSubject().asNode(), st.getPredicate().asNode(), st.getObject().asNode());
+                }
+            } 
+        }
         RDFDataMgr.write(out, quadGraph, Lang.TRIG); // or NQUADS
         
     }
