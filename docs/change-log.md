@@ -4,6 +4,8 @@
 ## 17 July 2020: V 1.9.4 (by FORTH-ICS)
 * Generator Policy file validation ([issue #138](https://github.com/isl/x3ml/issues/138))
 * Implementioned og MultiHashGenerator ([issue #140](https://github.com/isl/x3ml/issues/140))
+* Fixed issue with the generation of aggregated files when using TRIG output format ([issue #141](https://github.com/isl/x3ml/issues/141))
+* Fixed issue with the generation of a default namedgraph when nQuads are used ([issue #142](https://github.com/isl/x3ml/issues/142))
 
 
 ## 2 September 2019: V 1.9.3 (by FORTH-ICS)
