@@ -28,6 +28,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.sparql.core.DatasetGraphSimpleMem;
 import gr.forth.ics.isl.x3ml.engine.Domain;
 import gr.forth.ics.isl.x3ml.engine.X3ML;
 import javax.xml.XMLConstants;
@@ -53,6 +54,7 @@ import static gr.forth.ics.isl.x3ml.engine.X3ML.RootElement;
 import gr.forth.ics.isl.x3ml.engine.X3ML.TargetInfo;
 import gr.forth.Labels;
 import gr.forth.Utils;
+import gr.forth.ics.isl.x3ml.engine.ModelOutput;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
@@ -233,6 +235,7 @@ public class X3MLEngine {
         RootElement.mappingCounter=0;
         RootElement.linkCounter=0;
         Domain.globalVariables.clear();
+        ModelOutput.quadGraph=new DatasetGraphSimpleMem();
     }
 
     @Override

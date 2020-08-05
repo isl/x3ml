@@ -57,7 +57,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ModelOutput implements Output {
 
-    public static final DatasetGraph quadGraph=new DatasetGraphSimpleMem();
+    public static DatasetGraph quadGraph=new DatasetGraphSimpleMem();
     private final Model model;
     private final NamespaceContext namespaceContext;
 
@@ -250,11 +250,13 @@ public class ModelOutput implements Output {
         if(X3ML.Mappings.namedgraphProduced!=null && !X3ML.Mappings.namedgraphProduced.isEmpty()){
             defaultGraphSpace=X3ML.Mappings.namedgraphProduced;
         }
-        Node defgraph=new ResourceImpl(defaultGraphSpace).asNode();
-        while(stIter.hasNext()){
-            Statement st=stIter.next();
-            quadGraph.add(defgraph, st.getSubject().asNode(), st.getPredicate().asNode(), st.getObject().asNode());
-        } 
+//        if(!defaultGraphSpace.equals("http://default")){ //namespaces are used
+            Node defgraph=new ResourceImpl(defaultGraphSpace).asNode();
+            while(stIter.hasNext()){
+                Statement st=stIter.next();
+                quadGraph.add(defgraph, st.getSubject().asNode(), st.getPredicate().asNode(), st.getObject().asNode());
+            } 
+//        }
         RDFDataMgr.write(out, quadGraph, Lang.TRIG); // or NQUADS
         
     }
