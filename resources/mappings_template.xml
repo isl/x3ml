@@ -1,0 +1,38 @@
+<x3ml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" source_type="xpath" version="1.0" xsi:noNamespaceSchemaLocation="x3ml_v1.0.xsd">
+	<namespaces>
+		<namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
+		<namespace prefix="xsd" uri="http://www.w3.org/2001/XMLSchema#"/>
+		<namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
+	</namespaces>
+	<mappings>
+		<mapping>
+			<domain>
+				<source_node>_XPATH_</source_node>
+				<target_node>
+					<entity>
+						<type>_CLASS_URI_</type>
+					</entity>
+				</target_node>
+			</domain>
+			<link>
+				<path>
+					<source_relation>
+						<relation>_XPATH_</relation>
+					</source_relation>
+					<target_relation>
+						<relationship>_PROPERTY_URI_</relationship>
+					</target_relation>
+				</path>
+				<range>
+					<source_node>_XPATH_</source_node>
+					<target_node>
+						<entity>
+							<type>_CLASS_URI_</type>
+						</entity>
+					</target_node>
+				</range>
+			</link>
+		</mapping>
+	</mappings>
+</x3ml>
+	
