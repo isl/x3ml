@@ -1,5 +1,8 @@
 # Change Log
 
+## 06 May 2021: V 1.9.5 (by FORTH-ICS)
+* Fixed issue with the construction of valid URIs with special characters ([issue #144](https://github.com/isl/x3ml/issues/144))
+
 
 ## 17 July 2020: V 1.9.4 (by FORTH-ICS)
 * Generator Policy file validation ([issue #138](https://github.com/isl/x3ml/issues/138))
