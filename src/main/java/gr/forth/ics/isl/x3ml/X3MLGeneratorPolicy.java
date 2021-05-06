@@ -328,11 +328,16 @@ public class X3MLGeneratorPolicy implements Generator {
                     return uriValue(namespaceUri + expandedUriPart1 + uuid.toString().toUpperCase());
                 }
             }
-            return uriValue(namespaceUri + uriTemplate.expand()
+            
+            String uriSuffix=uriTemplate.expand();
+            if(uriSuffix.replaceAll(Labels.PERCENT_CHARACTER_ENCODED, Labels.PERCENT_CHARACTER).contains("%%")){
+                return uriValue(namespaceUri + uriTemplate.expand()
+                                                               .replaceAll(Labels.SLASH_CHARACTER_ENCODED, Labels.SLASH_CHARACTER));
+            }else{
+                return uriValue(namespaceUri + uriTemplate.expand()
                                                                .replaceAll(Labels.SLASH_CHARACTER_ENCODED, Labels.SLASH_CHARACTER)
-                                                               .replaceAll(Labels.PERCENT_CHARACTER_ENCODED, Labels.PERCENT_CHARACTER)
-                                                          
-            );
+                                                               .replaceAll(Labels.PERCENT_CHARACTER_ENCODED, Labels.PERCENT_CHARACTER));
+            }
         }
         catch (MalformedUriTemplateException e) {
             throw exception("Malformed", e);
