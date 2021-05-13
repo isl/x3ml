@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generator_policy>
+    
+    <generator name="SimpleLabelGen">
+        <pattern>{label}</pattern>
+    </generator>
+    
+    <generator name="SimpleLabelGenWithDescr">
+        <pattern>{label}</pattern>
+        <description>This is a simple label generator</description>
+    </generator>
+    
+    <generator name="SimpleLabelGenWithType" type="label">
+        <pattern>{label}</pattern>
+    </generator>
+    
+    <generator name="SimpleUriGen" prefix="adw">
+        <pattern>{hierarchy}/{term}</pattern>
+    </generator>
+    
+    <generator name="SimpleUriGenWithUUID" prefix="adw" uuid="yes">
+        <pattern>{hierarchy}/{term}</pattern>
+    </generator>
+    
+    <generator name="SimpleUriGenWithHashedContents" prefix="adw" shorten="yes">
+        <pattern>{hierarchy}/{term}</pattern>
+    </generator>
+    
+    <generator name="SimpleUriGenWithHashedContentsAndType" prefix="adw" shorten="yes" type="instance">
+        <pattern>{hierarchy}/{term}</pattern>
+    </generator>
+    
+    <generator name="CustomUriGen">
+        <custom generatorClass="gr.forth.URIorUUID">
+            <set-arg name="text"/>
+        </custom>
+    </generator>
+    
+    <generator name="CustomUriGenWithTypedArg">
+        <custom generatorClass="gr.forth.URIorUUID">
+            <set-arg name="text" type="xpath"/>
+        </custom>
+    </generator>
+
+</generator_policy>
