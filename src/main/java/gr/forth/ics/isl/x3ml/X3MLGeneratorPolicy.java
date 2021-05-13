@@ -451,7 +451,7 @@ public class X3MLGeneratorPolicy implements Generator {
     }
     
     /* validates the XML serialization of the generator policy definitions w.r.t. the default schema */
-    private static void validateGeneratorPolicyFileWithSchema(InputStream inputStream){
+    public static void validateGeneratorPolicyFileWithSchema(InputStream inputStream){
         try{
             URL schemaUrl=X3MLEngine.class.getResource(X3MLGeneratorPolicy.GENERATOR_POLICY_SCHEMA_FOLDER+X3MLGeneratorPolicy.GENERATOR_POLICY_SCHEMA_FILENAME);
             javax.xml.transform.Source policyFile=new StreamSource(inputStream);
