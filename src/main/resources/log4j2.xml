@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" >
+
+     <Properties>
+        <Property name="logPattern">%d{yyyy-MM-dd HH:mm:ss} %-5p %l - %m%n</Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${logPattern}" />
+        </Console>
+
+<!--        <RollingFile name="rollingfile" fileName="logs/x3ml-engine.log"  filePattern="logs/x3ml-engine-%i.log">
+            <PatternLayout pattern="${logPattern}" />
+            <Policies>
+                  <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+        </RollingFile>-->
+    </Appenders>
+
+    <Loggers>   
+        <Root level="info" >
+            <AppenderRef ref="Console" />
+            <!--<AppenderRef ref="rollingfile" />-->
+        </Root>
+        <logger name="com.hp.hpl.jena.reasoner.rulesys.FBRuleInfGraph" level="error" additivity="false"/>
+    </Loggers>
+</Configuration>
