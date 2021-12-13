@@ -100,11 +100,11 @@ public class X3MLEngineFactory {
     private static final Logger LOGGER=Logger.getLogger(X3MLEngineFactory.class);
     
     public enum OutputFormat{
-    RDF_XML, 
-    RDF_XML_PLAIN, 
-    NTRIPLES, 
-    TURTLE,
-    TRIG
+        RDF_XML, 
+        RDF_XML_PLAIN, 
+        NTRIPLES, 
+        TURTLE,
+        TRIG
     }
     
     /* Instantiate the factory with the default values */
@@ -454,6 +454,15 @@ public class X3MLEngineFactory {
         return this;
     }
     
+    /** Completely disables the logging for X3ML Engine transformation. 
+     * 
+     * @return the updated X3MLEngineFactory instance */
+    public X3MLEngineFactory withoutLogging(){
+        LOGGER.debug("Disabled logging");
+        LOGGER.setLevel(Level.OFF);
+        return this;
+    }
+    
     /** Reports the progress of the transformations. 
      * 
      * @return the updated X3MLEngineFactory instance */
@@ -593,7 +602,7 @@ public class X3MLEngineFactory {
         LOGGER.info("Output format: "+this.output.getRight());
         LOGGER.info("Report Progress: "+this.progressReporting);
         String associationTableExportMsg=(this.associationTableFile==null || !this.associationTableFile.isEmpty())?"Disabled":"Enabled, file: "+this.associationTableFile;
-        LOGGER.info("Export sssociation table: "+associationTableExportMsg);
+        LOGGER.info("Export association table: "+associationTableExportMsg);
     }
     
     /* returns the input files (their absolute paths) taking into account all the files and the folders
