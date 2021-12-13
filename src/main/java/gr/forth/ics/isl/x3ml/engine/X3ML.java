@@ -34,12 +34,16 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import com.thoughtworks.xstream.security.NoTypePermission;
+import com.thoughtworks.xstream.security.NullPermission;
+import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 import gr.forth.ics.isl.x3ml.X3MLEngine;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import gr.forth.Utils;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
+import java.util.Collection;
 import lombok.extern.log4j.Log4j;
 import org.w3c.dom.Node;
 
@@ -1136,6 +1140,10 @@ public interface X3ML {
         public static XStream x3mlStream() {
             XStream xstream = new XStream(new PureJavaReflectionProvider(), new XppDriver(new NoNameCoder()));
             xstream.setMode(XStream.NO_REFERENCES);
+            xstream.addPermission(NoTypePermission.NONE);
+            xstream.allowTypesByWildcard(new String[] {
+                "gr.forth.**",
+            });
             xstream.processAnnotations(RootElement.class);
             return xstream;
         }
