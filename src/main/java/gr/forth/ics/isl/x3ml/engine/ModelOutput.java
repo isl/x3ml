@@ -42,7 +42,7 @@ import gr.forth.Labels;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 
 /**
@@ -54,7 +54,7 @@ import lombok.extern.log4j.Log4j;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class ModelOutput implements Output {
 
     public static DatasetGraph quadGraph=new DatasetGraphSimpleMem();

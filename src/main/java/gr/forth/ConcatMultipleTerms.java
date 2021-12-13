@@ -24,7 +24,7 @@ import gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGeneratorException;
 import gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGenerator;
 import java.util.Map;
 import java.util.TreeMap;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 /** The generator is responsible for constructing values (either URIs, or literals)
  *  by concatenating multiple elements (that have the same tag name). More specifically 
@@ -44,7 +44,7 @@ import lombok.extern.log4j.Log4j;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class ConcatMultipleTerms implements CustomGenerator{
     private String prefix;
     private String sameTermsDelim;

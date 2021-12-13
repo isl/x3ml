@@ -44,7 +44,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jena.riot.Lang;
 
@@ -55,7 +55,7 @@ import org.apache.jena.riot.Lang;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class X3MLCommandLine {
     static final CommandLineParser PARSER = new PosixParser();
     static final HelpFormatter HELP = new HelpFormatter();

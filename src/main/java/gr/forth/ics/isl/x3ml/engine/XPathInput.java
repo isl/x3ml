@@ -46,7 +46,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import static org.joox.JOOX.$;
 
 /**
@@ -58,7 +58,7 @@ import static org.joox.JOOX.$;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class XPathInput {
 
     private final XPathFactory pathFactory = new net.sf.saxon.xpath.XPathFactoryImpl();

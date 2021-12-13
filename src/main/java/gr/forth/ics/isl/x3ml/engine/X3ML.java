@@ -35,16 +35,13 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import com.thoughtworks.xstream.security.NoTypePermission;
-import com.thoughtworks.xstream.security.NullPermission;
-import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 import gr.forth.ics.isl.x3ml.X3MLEngine;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import gr.forth.Utils;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
-import java.util.Collection;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.w3c.dom.Node;
 
 /**
@@ -298,7 +295,7 @@ public interface X3ML {
         public static String namedgraphProduced;
     }
 
-    @XStreamAlias("mapping") @Log4j
+    @XStreamAlias("mapping") @Log4j2
     public static class Mapping extends Visible {
 
         @XStreamAsAttribute

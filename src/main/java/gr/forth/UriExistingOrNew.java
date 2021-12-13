@@ -22,7 +22,7 @@ import static gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGenerator;
 import static gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGeneratorException;
 import java.util.TreeMap;
 import java.util.Map;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 /** The URIorUUID generator is responsible for generating a URI and in the cases 
  * where it is not valid it generates a UUID. It takes a single parameter (with name "text") 
@@ -38,7 +38,7 @@ import lombok.extern.log4j.Log4j;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class UriExistingOrNew implements CustomGenerator {
     private boolean containsPrefix;
     private String uriExisting;

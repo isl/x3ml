@@ -52,7 +52,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
 import java.net.URL;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jena.riot.Lang;
 
@@ -60,7 +60,7 @@ import org.apache.jena.riot.Lang;
  * @author Yannis Marketakis (marketak 'at' ics 'dot' forth 'dot' gr)
  * @author Nikos Minadakis (minadakn 'at' ics 'dot' forth 'dot' gr)
  */
-@Log4j
+@Log4j2
 public class Utils {
     
     /**Produces an error message describing the missing argument from the given label generators.

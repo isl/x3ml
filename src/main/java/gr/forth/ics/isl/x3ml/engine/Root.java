@@ -31,7 +31,7 @@ import java.util.Map;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.GeneratedValue;
 import gr.forth.Utils;
 import java.io.InputStream;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jena.riot.Lang;
 
@@ -43,7 +43,7 @@ import org.apache.jena.riot.Lang;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class Root {
 
     private final Element rootNode;

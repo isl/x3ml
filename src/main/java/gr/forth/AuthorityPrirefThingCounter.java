@@ -20,7 +20,7 @@ package gr.forth;
 
 import static gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGenerator;
 import static gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGeneratorException;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * a date interpreter
@@ -28,7 +28,7 @@ import lombok.extern.log4j.Log4j;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class AuthorityPrirefThingCounter implements CustomGenerator {
 
     private String authority;

@@ -21,7 +21,7 @@ package gr.forth;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**The class contains the necessary resources that are required for validating and 
@@ -30,7 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author Yannis Marketakis (marketak 'at' ics 'dot' forth 'dot' gr)
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class UriValidator {
     
     /** The method is responsible for validating a URI.

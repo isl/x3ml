@@ -40,8 +40,10 @@ import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jena.riot.Lang;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.w3c.dom.Element;
 
 /** This class instantiates X3ML Engine and handles the ingestion of user-defined details 
@@ -97,7 +99,9 @@ public class X3MLEngineFactory {
     private String associationTableFile;
     private Pair<OutputStream,OutputFormat> output;
     private boolean progressReporting;
-    private static final Logger LOGGER=Logger.getLogger(X3MLEngineFactory.class);
+    private static final Logger LOGGER=LogManager.getLogger(X3MLEngineFactory.class);
+            
+//            Logger.getLogger(X3MLEngineFactory.class);
     
     public enum OutputFormat{
         RDF_XML, 
@@ -450,7 +454,7 @@ public class X3MLEngineFactory {
      * @return the updated X3MLEngineFactory instance */
     public X3MLEngineFactory withVerboseLogging(){
         LOGGER.debug("Changed the logging level to verbose");
-        LOGGER.setLevel(Level.DEBUG);
+        Configurator.setRootLevel(Level.DEBUG);
         return this;
     }
     
@@ -459,7 +463,7 @@ public class X3MLEngineFactory {
      * @return the updated X3MLEngineFactory instance */
     public X3MLEngineFactory withoutLogging(){
         LOGGER.debug("Disabled logging");
-        LOGGER.setLevel(Level.OFF);
+        Configurator.setRootLevel(Level.OFF);
         return this;
     }
     

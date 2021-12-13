@@ -21,7 +21,7 @@ package gr.forth;
 import gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGenerator;
 import gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGeneratorException;
 import java.util.Date;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 /** The generator is responsible for generating a new timestamp value based on 
  * the given date. It uses a date (i.e. 15/01/1984) and a parameter indicating whether
@@ -36,7 +36,7 @@ import lombok.extern.log4j.Log4j;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class BMdates implements CustomGenerator {
     private String text;
     private Bounds bounds;

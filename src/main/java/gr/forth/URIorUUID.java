@@ -18,12 +18,9 @@ under the License.
 ==============================================================================*/
 package gr.forth;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import static gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGenerator;
 import static gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGeneratorException;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 /** The URIorUUID generator is responsible for generating a URI and in the cases 
  * where it is not valid it generates a UUID. It takes a single parameter (with name "text") 
@@ -39,7 +36,7 @@ import lombok.extern.log4j.Log4j;
  * @author Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
-@Log4j
+@Log4j2
 public class URIorUUID implements CustomGenerator {
     private String text;
 

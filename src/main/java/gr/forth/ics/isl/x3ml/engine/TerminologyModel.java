@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.Set;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** TerminologyModel is responsible for storing SKOS taxonomies and providing the 
  * corresponding functionalities. 
@@ -33,7 +34,7 @@ public class TerminologyModel {
     private static final Property BROADER_TRANSITIVE_PROPERTY=new PropertyImpl(Labels.SKOS_NAMESPACE+Labels.BROADER_TRANSITIVE);
     private static final Property EXACT_MATCH_PROPERTY=new PropertyImpl(Labels.SKOS_NAMESPACE+Labels.EXACT_MATCH);
     private static final Property RDFS_LABEL_PROPERTY=new PropertyImpl(Labels.RDFS_NAMESPACE+Labels.LABEL);
-    private static final Logger log=Logger.getLogger(TerminologyModel.class);
+    private static final Logger log=LogManager.getLogger(TerminologyModel.class);
     private static final String SKOS_SCHEMA_PATH="skos/skos.rdf";
     
     /** Creates a new TerminologyModel using the contents of the stream. The given 

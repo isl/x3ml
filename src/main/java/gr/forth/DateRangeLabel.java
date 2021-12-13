@@ -20,12 +20,12 @@ package gr.forth;
 
 import gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGenerator;
 import gr.forth.ics.isl.x3ml.X3MLGeneratorPolicy.CustomGeneratorException;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 
  */
-@Log4j
+@Log4j2
 public class DateRangeLabel implements CustomGenerator {
 
     private String date1 = "";
