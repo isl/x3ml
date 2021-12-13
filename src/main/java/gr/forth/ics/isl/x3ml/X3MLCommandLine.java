@@ -269,7 +269,7 @@ public class X3MLCommandLine {
                 throw exception("Cannot find input files",ex);
             }
         }else if(input.startsWith(INPUT_FOLDER_PREFIX)){
-            xmlElement=Utils.parseFolderWithXmlFiles(input.replace(INPUT_FOLDER_PREFIX, ""), false);
+            xmlElement=Utils.parseFolderWithXmlFiles(input.replace(INPUT_FOLDER_PREFIX, ""), true);
         }
         else{
             xmlElement = xml(file(input));
