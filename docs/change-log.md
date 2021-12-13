@@ -1,5 +1,11 @@
 # Change Log
 
+## 13 December 2021: V 2.0.0 (by FORTH-ICS)
+* Fixed issue with transformation of folders ([issue #136](https://github.com/isl/x3ml/issues/136))
+* Made X3ML-Engine a JDK-11 API ([issue #147](https://github.com/isl/x3ml/issues/147))
+* Migrated to Apache log4j2 logging ([issue #148](https://github.com/isl/x3ml/issues/148))
+* Introduced a method for disabling the logging through X3MLEngineFactory ([issue #149](https://github.com/isl/x3ml/issues/149))
+
 ## 06 May 2021: V 1.9.5 (by FORTH-ICS)
 * Fixed issue with the construction of valid URIs with special characters ([issue #144](https://github.com/isl/x3ml/issues/144))
 
