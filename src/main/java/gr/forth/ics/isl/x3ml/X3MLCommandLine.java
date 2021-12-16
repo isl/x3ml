@@ -150,9 +150,7 @@ public class X3MLCommandLine {
         createOptionsList();
         try {
             if(checkForVersionReporting(args)){
-                Properties propertiesFile=new Properties();
-                propertiesFile.load(X3MLCommandLine.class.getClassLoader().getResourceAsStream(X3MLEngine.PROJECT_PROPERTIES_FILENAME));
-                System.out.println("X3ML Engine version: "+propertiesFile.getProperty(X3MLEngine.PROJECT_PROPERTIES_VERSION_PROPERTY));
+                System.out.println(X3MLEngine.retrieveX3MLEngineVersion());
                 System.exit(0);
             }
             CommandLine cli = PARSER.parse(options, args);

@@ -597,6 +597,7 @@ public class X3MLEngineFactory {
     
     /* prints - using logger - the configuration details */
     private void informUserAboutConfiguration(){
+        LOGGER.info(X3MLEngine.retrieveX3MLEngineVersion());
         LOGGER.info("# X3ML Engine Mappings Files/Streams: "+this.mappingStreams.size());
         LOGGER.info("# Input Files/Streams: "+(this.inputStreams.size()+this.getInputFilesListing().size()));
         LOGGER.info("UUID size: "+this.uuidSize);
