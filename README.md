@@ -168,6 +168,7 @@ To run the x3ml engine from the console you need to download the x3ml engine exe
   * Option B-URL file: --terms @skos_terms_url
 * *-a,--assocTable <arg>*: export the contents of the association table in XML format
 * *-m,--mergeAssocWithRDF*:merge the contents of the association table with the RDF output
+* *-v,--version*:reports the X3ML Engine version
 	
 A simple example looks like:
 
