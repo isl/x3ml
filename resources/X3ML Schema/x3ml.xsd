@@ -86,7 +86,16 @@
 				</xs:element>
 				<xs:element name="comments" type="commentsType" minOccurs="0"/>
 			</xs:sequence>
-			<xs:attribute name="version" use="required"/>
+			<xs:attribute name="version" use="required">
+				<xs:annotation>
+					<xs:documentation>Compatibility version for X3ML Engine</xs:documentation>
+				</xs:annotation>	
+			</xs:attribute>
+			<xs:attribute name="mappings_verion" use="optional">
+				<xs:annotation>
+					<xs:documentation>Describes the version of the corresponding X3ML mappings file</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 			<xs:attribute name="source_type" use="required"/>
 			<xs:attribute name="editor"/>
 		</xs:complexType>
