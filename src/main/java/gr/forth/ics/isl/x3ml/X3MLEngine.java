@@ -89,8 +89,8 @@ public class X3MLEngine {
     private List<String> prefixes = new ArrayList<>();
     public static String exceptionMessagesList="";
     private static Pair<InputStream,Lang> terminologyStream=null;
-    public static final String PROJECT_PROPERTIES_FILENAME="project.properties";
-    public static final String PROJECT_PROPERTIES_VERSION_PROPERTY="version";
+    public static final String PROJECT_PROPERTIES_FILENAME="x3ml.project.properties";
+    public static final String PROJECT_PROPERTIES_VERSION_PROPERTY="X3ML_ENGINE_VERSION";
     
 
     public static List<String> validate(InputStream inputStream) {
