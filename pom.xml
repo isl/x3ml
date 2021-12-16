@@ -74,8 +74,15 @@
         </snapshotRepository>
     </distributionManagement>
     
+    
     <build>
         <defaultGoal>compile</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -85,6 +92,7 @@
                     <archive>
                         <manifest>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                         <manifestEntries>
                             <BuildTime>${maven.build.timestamp}</BuildTime>

@@ -43,8 +43,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jena.riot.Lang;
 
@@ -127,6 +129,9 @@ public class X3MLCommandLine {
         Option reportProgressOption = new Option(Labels.REPORT_PROGRESS_SHORT,Labels.REPORT_PROGRESS, false, 
                 "reports the progress of the transformations"
         );
+        Option versionNumberOption = new Option(Labels.VERSION_NUMBER_SHORT,Labels.VERSION_NUMBER, false, 
+                "reports the version of x3ml engine"
+        );
         
         options.addOption(inputOption)
                .addOption(x3mlOption)
@@ -137,13 +142,19 @@ public class X3MLCommandLine {
                .addOption(assocTableOption)
                .addOption(mergeAssocWithRDFOption)
                .addOption(termsOption)
-               .addOption(reportProgressOption);
+               .addOption(reportProgressOption)
+               .addOption(versionNumberOption);
     }
 
     public static void main(String[] args) {
         createOptionsList();
         try {
+            if(checkForVersionReporting(args)){
+                System.out.println(X3MLEngine.retrieveX3MLEngineVersion());
+                System.exit(0);
+            }
             CommandLine cli = PARSER.parse(options, args);
+
             int uuidTestSizeValue = -1;
             String uuidTestSizeString = cli.getOptionValue(Labels.UUID_TEST_SIZE);
             if (uuidTestSizeString != null) {
@@ -173,6 +184,13 @@ public class X3MLCommandLine {
             error("File does not exist: " + name);
         }
         return file;
+    }
+    
+    private static boolean checkForVersionReporting(String[] args) throws ParseException{
+        Options minimalOptions=new Options();
+        minimalOptions.addOption(new Option(Labels.VERSION_NUMBER_SHORT, Labels.VERSION_NUMBER, false, ""));
+        CommandLine cliObject=new PosixParser().parse(minimalOptions, args);
+        return cliObject.hasOption(Labels.VERSION_NUMBER);
     }
 
     static DocumentBuilderFactory documentBuilderFactory() {

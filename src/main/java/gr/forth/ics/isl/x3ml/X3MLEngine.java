@@ -58,6 +58,7 @@ import gr.forth.ics.isl.x3ml.engine.ModelOutput;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
+import java.util.Properties;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
@@ -88,6 +89,9 @@ public class X3MLEngine {
     private List<String> prefixes = new ArrayList<>();
     public static String exceptionMessagesList="";
     private static Pair<InputStream,Lang> terminologyStream=null;
+    public static final String PROJECT_PROPERTIES_FILENAME="project.properties";
+    public static final String PROJECT_PROPERTIES_VERSION_PROPERTY="version";
+    
 
     public static List<String> validate(InputStream inputStream) {
         try{
@@ -198,6 +202,17 @@ public class X3MLEngine {
 
     public static X3MLException exception(String message, Throwable throwable) {
         return new X3MLException(message, throwable);
+    }
+    
+    public static String retrieveX3MLEngineVersion(){
+        try{
+            Properties propertiesFile=new Properties();
+            propertiesFile.load(X3MLCommandLine.class.getClassLoader().getResourceAsStream(X3MLEngine.PROJECT_PROPERTIES_FILENAME));
+            return "X3ML Engine version: "+propertiesFile.getProperty(X3MLEngine.PROJECT_PROPERTIES_VERSION_PROPERTY);
+        }catch(IOException ex){
+            log.error("An error occured while retrieving X3ML Engine version",ex);
+            throw new X3MLException("An error occured while retrieving X3ML Engine version",ex);
+        }
     }
 
     public Output execute(Element sourceRoot, Generator generator) throws X3MLException {
