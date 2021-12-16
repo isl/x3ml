@@ -91,7 +91,7 @@
 					<xs:documentation>Compatibility version for X3ML Engine</xs:documentation>
 				</xs:annotation>	
 			</xs:attribute>
-			<xs:attribute name="mappings_verion" use="optional">
+			<xs:attribute name="mappings_version" use="optional">
 				<xs:annotation>
 					<xs:documentation>Describes the version of the corresponding X3ML mappings file</xs:documentation>
 				</xs:annotation>
