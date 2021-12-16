@@ -10,7 +10,7 @@
     <artifactId>x3ml-engine</artifactId>
     <packaging>jar</packaging>
     <name>X3ML-Engine</name>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.1-SNAPSHOT</version>
     
     <inceptionYear>2013</inceptionYear>
     <organization>
@@ -74,8 +74,15 @@
         </snapshotRepository>
     </distributionManagement>
     
+    
     <build>
         <defaultGoal>compile</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -85,6 +92,7 @@
                     <archive>
                         <manifest>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                         <manifestEntries>
                             <BuildTime>${maven.build.timestamp}</BuildTime>
