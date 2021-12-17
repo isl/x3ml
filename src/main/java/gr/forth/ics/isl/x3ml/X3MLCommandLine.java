@@ -42,7 +42,9 @@ import gr.forth.ics.isl.x3ml_reverse_utils.AssociationTableResources;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import lombok.extern.log4j.Log4j2;
@@ -151,27 +153,27 @@ public class X3MLCommandLine {
         try {
             if(checkForVersionReporting(args)){
                 System.out.println(X3MLEngine.retrieveX3MLEngineVersion());
-                System.exit(0);
-            }
-            CommandLine cli = PARSER.parse(options, args);
+            }else{
+                CommandLine cli = PARSER.parse(options, args);
 
-            int uuidTestSizeValue = -1;
-            String uuidTestSizeString = cli.getOptionValue(Labels.UUID_TEST_SIZE);
-            if (uuidTestSizeString != null) {
-                uuidTestSizeValue = Integer.parseInt(uuidTestSizeString);
+                int uuidTestSizeValue = -1;
+                String uuidTestSizeString = cli.getOptionValue(Labels.UUID_TEST_SIZE);
+                if (uuidTestSizeString != null) {
+                    uuidTestSizeValue = Integer.parseInt(uuidTestSizeString);
+                }
+                go(
+                    cli.getOptionValue(Labels.INPUT),
+                    cli.getOptionValue(Labels.X3ML),
+                    cli.getOptionValue(Labels.POLICY),
+                    cli.getOptionValue(Labels.OUTPUT),
+                    cli.getOptionValue(Labels.FORMAT),
+                    cli.getOptionValue(Labels.TERMS),
+                    cli.getOptionValue(Labels.MERGE_WITH_ASSOCIATION_TABLE),
+                    cli.hasOption(Labels.ASSOC_TABLE),
+                    cli.hasOption(Labels.REPORT_PROGRESS),
+                    uuidTestSizeValue
+                );
             }
-            go(
-                cli.getOptionValue(Labels.INPUT),
-                cli.getOptionValue(Labels.X3ML),
-                cli.getOptionValue(Labels.POLICY),
-                cli.getOptionValue(Labels.OUTPUT),
-                cli.getOptionValue(Labels.FORMAT),
-                cli.getOptionValue(Labels.TERMS),
-                cli.getOptionValue(Labels.MERGE_WITH_ASSOCIATION_TABLE),
-                cli.hasOption(Labels.ASSOC_TABLE),
-                cli.hasOption(Labels.REPORT_PROGRESS),
-                uuidTestSizeValue
-            );
         }
         catch (Exception e) {
             error(e.getMessage());
@@ -187,10 +189,8 @@ public class X3MLCommandLine {
     }
     
     private static boolean checkForVersionReporting(String[] args) throws ParseException{
-        Options minimalOptions=new Options();
-        minimalOptions.addOption(new Option(Labels.VERSION_NUMBER_SHORT, Labels.VERSION_NUMBER, false, ""));
-        CommandLine cliObject=new PosixParser().parse(minimalOptions, args);
-        return cliObject.hasOption(Labels.VERSION_NUMBER);
+        List<String> arguments=Arrays.asList(args);
+        return arguments.contains("-"+Labels.VERSION_NUMBER_SHORT) || arguments.contains("--"+Labels.VERSION_NUMBER);        
     }
 
     static DocumentBuilderFactory documentBuilderFactory() {
