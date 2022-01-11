@@ -213,8 +213,8 @@ The GUI application can be downloaded from https://github.com/ymark/X3MLEngine-g
 
 # Relevant Publications
 
-* 	Nikos Minadakis, Yannis Marketakis, Haridimos Kondylakis, Giorgos Flouris, Maria Theodoridou, Martin Doerr, and Gerald de Jong. X3ML Framework: An effictive suite for supporting data mappings. Workshop for Extending, Mapping and Focusing the CRM - co-located with TPDL'2015, Poznan, Poland, September 2015. [PDF] (http://users.ics.forth.gr/~marketak/download/x3mlEngine_tpdl2015.pdf)
-* 	Yannis Marketakis, Nikos Minadakis, Haridimos Kondylakis, Konstantina Konsolaki, Georgios Samaritakis, Maria Theodoridou, Giorgos Flouris, Martin Doerr . X3ML Mapping Framework for Information Integration in Cultural Heritage and beyond. International Journal on Digital Libraries, Special Issue: Extending, Mapping and Focusing the CIDOC CRM (to be published 2016). [PDF] (http://users.ics.forth.gr/~marketak/download/X3ML_Framework_IJDL_2016.pdf)
+* 	Nikos Minadakis, Yannis Marketakis, Haridimos Kondylakis, Giorgos Flouris, Maria Theodoridou, Martin Doerr, and Gerald de Jong. X3ML Framework: An effictive suite for supporting data mappings. Workshop for Extending, Mapping and Focusing the CRM - co-located with TPDL'2015, Poznan, Poland, September 2015. [PDF] (http://users.ics.forth.gr/~marketak/files/x3mlEngine_tpdl2015.pdf)
+* 	Yannis Marketakis, Nikos Minadakis, Haridimos Kondylakis, Konstantina Konsolaki, Georgios Samaritakis, Maria Theodoridou, Giorgos Flouris, Martin Doerr . X3ML Mapping Framework for Information Integration in Cultural Heritage and beyond. International Journal on Digital Libraries, Special Issue: Extending, Mapping and Focusing the CIDOC CRM. [PDF] (http://users.ics.forth.gr/~marketak/files/marketakis_2017_IJDL.pdf)
 
 ---
 
