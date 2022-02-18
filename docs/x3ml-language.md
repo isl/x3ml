@@ -36,6 +36,7 @@
 		* **[Hashed URIs with Templates](#hashed-uris-with-templates)**
 		* **[UUID-suffixed URIs with Templates](#uuid-suffixed-uris-with-templates)**
 	* **[Custom Generators](#custom-generators)**
+	* **[Well-known Generator Definitions](#well-known-generator-definitions)**
 
 # Introduction
 
@@ -850,8 +851,13 @@ if (rootElement.namespaces != null) {
 	}
 }
 ```
+
+## Well-known generator definitions
+
+A list of well-known and commonly used generator definitions can be found [here](https://github.com/isl/x3ml/blob/master/docs/generator-definitions.md)
+
 ---
 
-Last updated: May 29, 2019
+Last updated: Feb 18, 2022
 
 ---
