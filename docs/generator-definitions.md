@@ -63,7 +63,23 @@ If more than one parameters are requested for generating a literal, the proper X
 
 ## LocalTermURI
 
-// definition and documentation goes here
+```xml
+<generator name="LocalTermURI" prefix="pref">
+  <pattern>{hierarchy}/{term}</pattern>
+</generator>
+```
+
+This generator is used for constructing URIs based on two parameters (called ```hierarchy``` and ```term```), separated by a slash character, 
+and using as a prefix a namespace with the abbreviation pref. 
+As regards the latter, this has to be declared as a namespace in one of the namespaces section in X3ML mappings definition. 
+These sections are:
+* source info block (```x3ml -> info -> source -> source_info -> namespaces -> namespace```) 
+* target info block (```x3ml -> info -> target -> target_info -> namespaces -> namespace```) 
+* namespaces block (```x3ml -> namespaces -> namespace```) 
+
+In addition, the LocalTermGenerator may contain the additional parameters, ```shorten``` and ```uuid```, in order to generate a hashed URI, or a random URI as described 
+[here](https://github.com/isl/x3ml/blob/master/docs/x3ml-language.md#hashed-uris-with-templates)
+and [here](https://github.com/isl/x3ml/blob/master/docs/x3ml-language.md#hashed-uris-with-templates)
 
 ## URIorUUID
 
