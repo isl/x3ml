@@ -3,6 +3,7 @@
 This page contains the definitions and the documentation of a few commonly-used generators. 
 Note that this page contains the basic definitions and not their variations (e.g. hashed generators) 
 since these are properly covered [here](https://github.com/isl/x3ml/blob/master/docs/x3ml-language.md#simple-templates)
+Examples of the generators described below can be found [here](https://github.com/isl/x3ml/tree/master/src/test/resources/generators)
 
 ### Table of Contents
 
