@@ -673,7 +673,7 @@ The user-defined generator shown below will create URIs of the form: "http://www
 
 ```xml
 <generator_policy>
-	<generator name="simple-uri-gen" uri="ex">
+	<generator name="simple-uri-gen" prefix="ex">
 		<pattern>{category}/{id}</pattern>
 	</generator>
 </generator_policy>
@@ -707,7 +707,7 @@ The user-defined generator shown below will create URIs of the form: "http://www
 
 ```xml
 <generator_policy>
-	<generator name="simple-uri-gen" uri="ex" shorten="yes">
+	<generator name="simple-uri-gen" prefix="ex" shorten="yes">
 		<pattern>{category}/{id}</pattern>
 	</generator>
 </generator_policy>
