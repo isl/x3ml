@@ -741,7 +741,7 @@ The user-defined generator shown below will create URIs of the form: "http://www
 
 ```xml
 <generator_policy>
-	<generator name="simple-uri-gen" uri="ex" uuid="yes">
+	<generator name="simple-uri-gen" prefix="ex" uuid="yes">
 		<pattern>{category}/{id}/</pattern>
 	</generator>
 </generator_policy>
