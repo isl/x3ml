@@ -48,8 +48,8 @@ public class Example {
         final String ASSOCIATION_TABLE_PATH=""; ////if empty, the generator will not be used
         final int UUID_SIZE=0;
         final Pair<String,Lang> terminology=Pair.of("example/terms.nt", Lang.NT);   //if empty it will not be used
-        final outputFormat OUT_FORMAT=outputFormat.RDF_XML;
-        final outputStream OUT_STREAM=outputStream.SYSTEM_OUT;
+        final outputFormat OUT_FORMAT=outputFormat.JSON_LD;
+        final outputStream OUT_STREAM=outputStream.FILE;
         X3MLEngine.REPORT_PROGRESS=false;
         
         X3MLEngine engine;
@@ -107,6 +107,16 @@ public class Example {
                             break;
                         default:    //don't output
                 }break;
+            case JSON_LD:
+                switch(OUT_STREAM){
+                        case SYSTEM_OUT:
+                            output.write(System.out,Labels.OUTPUT_MIME_TYPE_JSON_LD);
+                            break;
+                        case FILE:
+                            output.write(new PrintStream(new File("output.jsonld")), Labels.OUTPUT_MIME_TYPE_JSON_LD);
+                            break;
+                        default:    //don't output
+                }break;
         }
         if(!ASSOCIATION_TABLE_PATH.isEmpty()){
             GeneratorContext.exportAssociationTable(ASSOCIATION_TABLE_PATH);
@@ -117,7 +127,8 @@ public class Example {
         RDF_XML,
         NTRIPLES,
         TURTLE,
-        TRIG
+        TRIG,
+        JSON_LD
     }
     
     private enum outputStream{
