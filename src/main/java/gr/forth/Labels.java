@@ -104,16 +104,19 @@ public class Labels {
     public static final String TERMS_SHORT="t";    
     
     /* Labels related to the output */
+    public static final String OUTPUT_FORMAT_JSON_LD="JSONLD";
     public static final String OUTPUT_FORMAT_NTRIPLE="N-TRIPLE";
     public static final String OUTPUT_FORMAT_RDF_XML_ABBREV="RDF/XML-ABBREV";
     public static final String OUTPUT_FORMAT_RDF_XML="RDF/XML";
     public static final String OUTPUT_FORMAT_TRIG="TRIG";
     public static final String OUTPUT_FORMAT_TURTLE="TURTLE";
+    public static final String OUTPUT_MIME_TYPE_JSON_LD="application/ld+json";
     public static final String OUTPUT_MIME_TYPE_NTRIPLES="application/n-triples";
     public static final String OUTPUT_MIME_TYPE_TRIG="application/trig";
     public static final String OUTPUT_MIME_TYPE_TURTLE="text/turtle";
     public static final String OUTPUT_MIME_TYPE_RDF_XML="application/rdf+xml";
     public static final String OUTPUT_MIME_TYPE_RDF_XML_ABBREV="application/rdf+xml_plain";
+    public static final String OUTPUT_EXTENSION_JSON_LD="jsonld";
     public static final String OUTPUT_EXTENSION_NTRIPLES="nt";
     public static final String OUTPUT_EXTENSION_RDF="rdf";
     public static final String OUTPUT_EXTENSION_TRIG="trig";

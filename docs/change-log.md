@@ -1,5 +1,9 @@
 # Change Log
 
+## 22 February 2022: V 2.1.0 (by FORTH-ICS)
+
+* Support exporting transformed data to JSON-LD format (extension: .jsonld, mime-type: 	application/ld+json)
+
 ## 16 December 2021: V 2.0.0 (by FORTH-ICS)
 * Fixed issue with transformation of folders ([issue #136](https://github.com/isl/x3ml/issues/136))
 * Made X3ML-Engine a JDK-11 API ([issue #147](https://github.com/isl/x3ml/issues/147))

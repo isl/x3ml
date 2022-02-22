@@ -194,6 +194,13 @@ public class ModelOutput implements Output {
     public void writeTURTLE(OutputStream out) {
         model.write(out, Labels.OUTPUT_FORMAT_TURTLE);
     }
+    
+    /** Exports the transformed contents of graph in TURTLE format using the given output stream.
+     * 
+     * @param out the output stream that will be used for exporting the transformed contents */
+    public void writeJsonLD(OutputStream out) {
+        model.write(out, Labels.OUTPUT_FORMAT_JSON_LD);
+    }
 
     /** Exports the transformed contents of the Jena model in the given output stream with respect to 
      * the given format. Depending on the selected format the contents can be exported as triples or 
@@ -233,6 +240,8 @@ public class ModelOutput implements Output {
                 writeXMLPlain(out);
             } else if (Labels.OUTPUT_MIME_TYPE_TRIG.equalsIgnoreCase(format)){
                 writeQuads(out);
+            } else if (Labels.OUTPUT_MIME_TYPE_JSON_LD.equalsIgnoreCase(format)){
+                writeJsonLD(out);
             }else {
                 writeXML(out);
             }
