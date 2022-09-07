@@ -3,7 +3,7 @@
 ## 09 September 2022: V 2.1.0 (by FORTH-ICS)
 
 * Support exporting transformed data to JSON-LD format (extension: .jsonld, mime-type: 	application/ld+json)
-* Fixed issue with output that contains namedgraphs (([issue #136](https://github.com/isl/x3ml/issues/157)))
+* Fixed issue with output that contains namedgraphs (([issue #157](https://github.com/isl/x3ml/issues/157)))
 
 ## 16 December 2021: V 2.0.0 (by FORTH-ICS)
 * Fixed issue with transformation of folders ([issue #136](https://github.com/isl/x3ml/issues/136))
@@ -14,7 +14,7 @@
 
 ## 06 May 2021: V 1.9.5 (by FORTH-ICS)
 * Fixed issue with the construction of valid URIs with special characters ([issue #144](https://github.com/isl/x3ml/issues/144))
-* Fixed issue with output that contains namedgraphs (([issue #136](https://github.com/isl/x3ml/issues/157))) (not appearing in version 2.0.0)
+* Fixed issue with output that contains namedgraphs (([issue #157](https://github.com/isl/x3ml/issues/157))) (not appearing in version 2.0.0)
 
 ## 17 July 2020: V 1.9.4 (by FORTH-ICS)
 * Generator Policy file validation ([issue #138](https://github.com/isl/x3ml/issues/138))
