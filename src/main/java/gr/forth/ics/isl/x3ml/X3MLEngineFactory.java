@@ -23,6 +23,7 @@ import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
 import gr.forth.ics.isl.x3ml.engine.Generator;
 import gr.forth.ics.isl.x3ml.engine.GeneratorContext;
 import gr.forth.Utils;
+import gr.forth.ics.isl.x3ml.engine.X3ML;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -133,6 +134,7 @@ public class X3MLEngineFactory {
      */
     public static X3MLEngineFactory create(){
         LOGGER.debug("Created an instance of X3MLEngineFactory");
+        X3ML.RootElement.hasNamedGraphs=false;
         return new X3MLEngineFactory();
     }
     
