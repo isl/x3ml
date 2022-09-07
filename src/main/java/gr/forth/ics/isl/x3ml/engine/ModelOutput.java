@@ -218,14 +218,15 @@ public class ModelOutput implements Output {
     public void write(OutputStream out, String format) {
         if(X3ML.RootElement.hasNamedGraphs){    //export quads
             if(!Labels.OUTPUT_MIME_TYPE_TRIG.equalsIgnoreCase(format)){
-                log.warn("Invalid mime type used for exporting quads.");
-                File outputFileTrig=new File("output-"+System.currentTimeMillis()+"."+Labels.TRIG);
-                log.warn("Exporting contents in TRIG format in file "+outputFileTrig);
-                try{
-                    writeQuads(new PrintStream(outputFileTrig));
-                }catch(FileNotFoundException ex){
-                    throw exception("An error occurred while exporting Quads",ex);
-                }
+                throw exception("Invalid mime type used for exporting quads. Please specify "+Labels.TRIG+" format");
+//                log.warn("Invalid mime type used for exporting quads.");
+//                File outputFileTrig=new File("output-"+System.currentTimeMillis()+"."+Labels.TRIG);
+//                log.warn("Exporting contents in TRIG format in file "+outputFileTrig);
+//                try{
+//                    writeQuads(new PrintStream(outputFileTrig));
+//                }catch(FileNotFoundException ex){
+//                    throw exception("An error occurred while exporting Quads",ex);
+//                }
             }else{
                 writeQuads(out);
             }
