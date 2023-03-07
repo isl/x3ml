@@ -22,6 +22,13 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import static eu.delving.x3ml.AllTests.compareNTriples;
+import static eu.delving.x3ml.AllTests.document;
+import static eu.delving.x3ml.AllTests.engine;
+import static eu.delving.x3ml.AllTests.errorFree;
+import static eu.delving.x3ml.AllTests.policy;
+import static eu.delving.x3ml.AllTests.xmlToNTriples;
+import gr.forth.ics.isl.x3ml.X3MLEngine;
 import gr.forth.ics.isl.x3ml.engine.GeneratorContext;
 import gr.forth.ics.isl.x3ml.engine.VariableScope;
 import gr.forth.ics.isl.x3ml.engine.X3ML;
@@ -29,9 +36,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -116,6 +125,16 @@ public class TestConditions implements X3ML {
 //                .remove("pokey").expect(false);
     }
 
+    @Test
+    public void testDisjunctiveComparisonsCompact(){
+        X3MLEngine engine = engine("/conditionals/mappings.x3ml");
+        X3MLEngine.Output output = engine.execute(document("/conditionals/input.xml"),policy("/conditionals/generator-policy.xml"));
+        String[] mappingResult = output.toStringArray();
+        String[] expectedResult = xmlToNTriples("/conditionals/expectedOutput.rdf");
+        List<String> diff = compareNTriples(expectedResult, mappingResult);
+        assertTrue("\nLINES:"+ diff.size() + "\n" + StringUtils.join(diff, "\n") + "\n", errorFree(diff));
+    }
+    
     // ====================================
 
     static Case use(String... conditionLines) {

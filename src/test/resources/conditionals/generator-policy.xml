@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generator_policy>
+    
+    <generator name="SimpleLabel">
+        <pattern>{label}</pattern>
+    </generator>
+    <generator name="LocalTermURI" prefix="loc">
+        <pattern>{hierarchy}/{term}</pattern>
+    </generator>
+	<generator name="GermanDateTime">
+        <custom generatorClass="gr.forth.GermanDate">
+            <set-arg name="bound" type="constant"/>
+            <set-arg name="text"/>
+        </custom>
+    </generator>
+	<generator name="URIorUUID">
+        <custom generatorClass="gr.forth.URIorUUID">
+            <set-arg name="text"/>
+        </custom>
+    </generator>
+
+</generator_policy>
