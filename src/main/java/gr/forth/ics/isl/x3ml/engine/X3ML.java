@@ -672,7 +672,16 @@ public interface X3ML {
 
         @Override
         public boolean yes(GeneratorContext context) {
-            return value.equals(context.evaluate(expression));
+            if(value.contains("||")){
+                for(String valuePart : value.split("\\|\\|")){
+                    if(valuePart.trim().equals(context.evaluate(expression))){
+                        return true;
+                    }
+                }
+                return false;
+            }else{
+                return value.equals(context.evaluate(expression));
+            }
         }
     }
     

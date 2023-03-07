@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot>
+    <COIN>
+        <ID>100</ID>
+        <DESCRIPTION>Coin with value 100</DESCRIPTION>
+    </COIN>
+	<COIN>
+        <ID>200</ID>
+        <DESCRIPTION>Coin with value 200</DESCRIPTION>
+    </COIN>
+	<COIN>
+        <ID>300</ID>
+        <DESCRIPTION>Coin with value 300</DESCRIPTION>
+    </COIN>
+	<COIN>
+        <ID>400</ID>
+        <DESCRIPTION>Coin with value 400</DESCRIPTION>
+    </COIN>
+</dataroot>
+
