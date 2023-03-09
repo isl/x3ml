@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot>
+    <COIN>
+        <ID>100</ID>
+        <COUNTRY_ID>C1</COUNTRY_ID>
+        <ID_STATUS>VALID</ID_STATUS>
+    </COIN>
+    <COIN>
+        <ID>200</ID>
+        <COUNTRY_ID>C2</COUNTRY_ID>
+        <ID_STATUS/>
+    </COIN>
+    <COIN>
+        <ID>300</ID>
+        <COUNTRY_ID>C3</COUNTRY_ID>
+        <COIN_ID_STATUS>VALID</COIN_ID_STATUS>
+    </COIN>
+</dataroot>

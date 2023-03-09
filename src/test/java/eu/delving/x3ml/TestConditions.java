@@ -127,10 +127,20 @@ public class TestConditions implements X3ML {
 
     @Test
     public void testDisjunctiveComparisonsCompact(){
-        X3MLEngine engine = engine("/conditionals/mappings.x3ml");
-        X3MLEngine.Output output = engine.execute(document("/conditionals/input.xml"),policy("/conditionals/generator-policy.xml"));
+        X3MLEngine engine = engine("/conditionals/01_mappings.x3ml");
+        X3MLEngine.Output output = engine.execute(document("/conditionals/01_input.xml"),policy("/conditionals/generator-policy.xml"));
         String[] mappingResult = output.toStringArray();
-        String[] expectedResult = xmlToNTriples("/conditionals/expectedOutput.rdf");
+        String[] expectedResult = xmlToNTriples("/conditionals/01_expectedOutput.rdf");
+        List<String> diff = compareNTriples(expectedResult, mappingResult);
+        assertTrue("\nLINES:"+ diff.size() + "\n" + StringUtils.join(diff, "\n") + "\n", errorFree(diff));
+    }
+
+    @Test
+    public void testDisjunctiveComparisonsUsingXpath(){
+        X3MLEngine engine = engine("/conditionals/02_mappings.x3ml");
+        X3MLEngine.Output output = engine.execute(document("/conditionals/02_input.xml"),policy("/conditionals/generator-policy.xml"));
+        String[] mappingResult = output.toStringArray();
+        String[] expectedResult = xmlToNTriples("/conditionals/02_expectedOutput.rdf");
         List<String> diff = compareNTriples(expectedResult, mappingResult);
         assertTrue("\nLINES:"+ diff.size() + "\n" + StringUtils.join(diff, "\n") + "\n", errorFree(diff));
     }
