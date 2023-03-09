@@ -379,6 +379,28 @@ Multiple conditions can also be combined into boolean expressions:
 </if>
 ```
 
+### Compact expression for conditions
+
+X3ML offers a more compact view for expressing conditions invoking several elements from the input data. 
+More specifically, compact expressions are supported for the **[exists](#exists)** and **[equals](#equals)** expresions. 
+In the first case, the compact view is provided from the XPATH expression itself (e.g. that supports describing XPATH expressions using ORs), 
+while in the second case we rely on a specific pattern supported by the X3ML itself. 
+
+Using compact expression for **[exists](#exists)** in order to check the existence of text node in different elements of the data input (e.g. in the elements NODE_A or NODE_B or NODE_C or NODE_D)
+```xml
+<if>
+	<exists>NODE_A/text() | NODE_B/text() | NODE_C/text() | NODE_D/text()</exists>
+</if>
+```
+
+Using compact expression for **[equals](#equals)** in order to check the different values (e.g. equals to values VALUE_1 or VALUE_2 or VALUE_3 or VALUE_4) of a text node 
+```xml
+<if>
+	<equals value="VALUE_1 || VALUE_2 || VALUE_3 || VALUE_4">text()</equals>
+</if>
+```
+
+
 # Extensions
 
 Several times it is required to created an extended target from the source data resources. The extension could be: (a) by extending the a target node with more resources using an *additional* node, and/or (b) by intervening more resources in the target path using *intermediate* nodes. The following image depicts these extensions. 
