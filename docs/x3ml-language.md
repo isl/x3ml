@@ -20,7 +20,7 @@
 	* **[skos:exact_match](#skosexact_match)**
 	* **[skos:broader](#skosbroader)**
 	* **[Multiple Conditions](#multiple-conditions)**
-	* **[Compact expression for conditions](compact-expression-for-conditions)**
+	* **[Compact expression for conditions](#compact-expression-for-conditions)**
 * **[Extensions](#extensions)**
 	* **[Additional Nodes](#additional-nodes)**
 	* **[Intermediate Nodes](#intermediate-nodes)**
