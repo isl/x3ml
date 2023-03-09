@@ -1,5 +1,9 @@
 # Change Log
 
+## 07 March 2023: V 2.2.0 (by FORTH-ICS) 
+
+* Shortcut for disjunctive comparisons (([issue #159](https://github.com/isl/x3ml/issues/159)))
+
 ## 09 September 2022: V 2.1.0 (by FORTH-ICS)
 
 * Support exporting transformed data to JSON-LD format (extension: .jsonld, mime-type: 	application/ld+json)
