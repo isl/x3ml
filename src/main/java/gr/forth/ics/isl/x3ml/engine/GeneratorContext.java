@@ -31,6 +31,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+
 import org.w3c.dom.Attr;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
 import gr.forth.Labels;
@@ -111,11 +115,11 @@ public abstract class GeneratorContext {
      * @param unique a unique value (usually the type of additional/intermediates) for creating always new instances
      * @return the value that has been generated (either now, or previously )  */
     public GeneratedValue getInstance(final GeneratorElement generator, String globalVariable, String variable_deprecated, String variable, String unique) {
-        log.debug("Generate instance/value. Generator Details: "+generator.getName()+", Args"+generator.getArgs());
-        log.debug("Generate instance/value. Variable: "+variable);
-        log.debug("Generate instance/value. Global Variable: "+globalVariable);
-        log.debug("Generate instance/value. Deprecated Variable: "+variable_deprecated);
-        log.debug("Generate instance/value. Unique Value: "+unique);
+        log.debug("Generate instance/value. Generator Details: {} Args {}", generator.getName(), generator.getArgs());
+        log.debug("Generate instance/value. Variable: {}", variable);
+        log.debug("Generate instance/value. Global Variable: {}", globalVariable);
+        log.debug("Generate instance/value. Deprecated Variable: {}", variable_deprecated);
+        log.debug("Generate instance/value. Unique Value: {}", unique);
         if(generator == null){
             throw exception("Value generator missing");
         }
@@ -174,7 +178,7 @@ public abstract class GeneratorContext {
 //                String nodeName = extractXPath(node) + unique+"-"+typeAwareVar;
                 String nodeName = extractXPath(Domain.domainNode) + unique+"-"+variable;
                 generatedValue = context.getGeneratedValue(nodeName);
-                log.debug("Retrieved Generated Value: "+nodeName+"\t"+generatedValue);
+                log.debug("Retrieved Generated Value: {}\t{}", nodeName, generatedValue);
                 if (generatedValue == null) {
                     generatedValue = context.policy().generate(generator, new Generator.ArgValues() {
                         @Override
@@ -203,7 +207,7 @@ public abstract class GeneratorContext {
                             }
                         });
                     }
-                    log.debug("put generated value: "+nodeName+"\t"+generatedValue);
+                    log.debug("put generated value: {}\t{}", nodeName, generatedValue);
                     context.putGeneratedValue(nodeName, generatedValue);
                     if(X3MLEngine.ENABLE_ASSOCIATION_TABLE){
                         this.createAssociationTable(generatedValue, genArg, extractAssocTableXPath(node));
@@ -389,32 +393,81 @@ public abstract class GeneratorContext {
         return extractAssocTableXPath(node);
     }
         
+    /**
+     * Extracts the XPath expression of the given node.
+     */
+    private static final HashMap<Node, String> xpathCache = new HashMap<>();
     public static String extractXPath(Node node) {
         if (node == null || node.getNodeType() == Node.DOCUMENT_NODE) {
-            return "/";
-        } else {
-            String soFar="";
-            int sibNumber = 0;
-            if(node.getNodeType()==Node.ATTRIBUTE_NODE){
-                soFar= extractXPath(((Attr)node).getOwnerElement());
-            }else{
-                soFar = extractXPath(node.getParentNode());
+            return "";
+        }
 
-                Node sib = node;
-                while (sib.getPreviousSibling() != null) {
-                    sib = sib.getPreviousSibling();
-                    if (sib.getNodeType() == Node.ELEMENT_NODE) {
-                        sibNumber++;
-                    }
+        if (xpathCache.containsKey(node)) {
+            System.out.println("Cache hit xpath:");
+            return xpathCache.get(node);
+        }
+
+        Deque<Node> stack = new ArrayDeque<>();
+        while (node != null && node.getNodeType() != Node.DOCUMENT_NODE) {
+            stack.push(node);
+            node = (node.getNodeType() == Node.ATTRIBUTE_NODE) ? ((Attr) node).getOwnerElement() : node.getParentNode();
+        }
+
+        StringBuilder xpathBuilder = new StringBuilder();
+        while (!stack.isEmpty()) {
+            Node current = stack.pop();
+            if (current.getParentNode() != null || current.getNodeType() == Node.ATTRIBUTE_NODE) { // Skip the #document node
+                xpathBuilder.append('/');
+                xpathBuilder.append(current.getNodeName());
+
+                if (current.getNodeType() != Node.ATTRIBUTE_NODE) {
+                    int index = getIndexAmongSiblings(current);
+                    xpathBuilder.append('[').append(index).append(']');
                 }
             }
-            return String.format(
-                    "%s%s[%d]/",
-                    soFar, node.getNodeName(), sibNumber
-            );
         }
+
+        xpathBuilder.append('/'); // Add trailing slash
+        String xpath = xpathBuilder.toString();
+        xpathCache.put(node, xpath);
+        return xpath;
     }
-    
+
+    /**
+     * Returns the index of the given node among its siblings with the same name.
+     * Because this operation is very expensive, the results are cached.
+     * 
+     * The assumption is that the node is not moved around in the DOM tree and
+     * that the siblings are not added or removed.
+     * 
+     * Node class doesn't override Object hashCode() and equals()
+     * so we assume that for any given document the Node object stays tha same.
+     * This allows us to use WeakHashMap to cache the results.
+     * 
+     * The cache should be cleared after each document is processed.
+     */
+    private static final HashMap<Node, Integer> indexCache = new HashMap<>();
+    private static int getIndexAmongSiblings(Node node) {
+        if (indexCache.containsKey(node)) {
+            return indexCache.get(node);
+        }
+
+        int index = 0; // X3ML uses zero-based indexing, even so XPath is one-based
+        for (Node sibling = node.getPreviousSibling(); sibling != null; sibling = sibling.getPreviousSibling()) {
+            if (sibling.getNodeType() == Node.ELEMENT_NODE && sibling.getNodeName().equals(node.getNodeName())) {
+                index++;
+            }
+        }
+
+        indexCache.put(node, index);
+        return index;
+    }
+
+    public static void clear() {
+        indexCache.clear();
+        xpathCache.clear();
+    }
+
     public static String extractAssocTableXPath(Node node) {
         return $(node).xpath();
     }

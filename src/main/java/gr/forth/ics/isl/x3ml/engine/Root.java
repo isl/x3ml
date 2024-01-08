@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.GeneratedValue;
+
+import gr.forth.IterableNodeList;
 import gr.forth.Utils;
 import java.io.InputStream;
 import lombok.extern.log4j.Log4j2;
@@ -108,7 +110,7 @@ public class Root {
     }
 
     public List<Domain> createDomainContexts(X3ML.DomainElement domain,String namedgraph) {
-        List<Node> domainNodes = xpathInput.nodeList(rootNode, domain.source_node);
+        IterableNodeList domainNodes = xpathInput.nodeList(rootNode, domain.source_node);
         List<Domain> domains = new ArrayList<>();
         int domainNodesTotal=domainNodes.size();
         int index = 1;

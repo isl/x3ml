@@ -21,6 +21,9 @@ package gr.forth.ics.isl.x3ml.engine;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
+
+import gr.forth.IterableNodeList;
+
 import org.w3c.dom.Node;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -118,7 +121,7 @@ public class Path extends GeneratorContext {
         if(range.source_node.skip!=null && range.source_node.skip.equalsIgnoreCase("true")){    //namedgraphURI was given
             expression="";
         }
-        List<Node> rangeNodes = context.input().nodeList(node, expression);
+        IterableNodeList rangeNodes = context.input().nodeList(node, expression);
         List<Range> ranges = new ArrayList<Range>();
         int index = 1;
         for (Node rangeNode : rangeNodes) {

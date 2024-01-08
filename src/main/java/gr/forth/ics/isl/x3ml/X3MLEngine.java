@@ -268,6 +268,7 @@ public class X3MLEngine {
         
         String[] toStringArray();
 
+        void close();
     }
 
     private X3MLEngine(RootElement rootElement) {

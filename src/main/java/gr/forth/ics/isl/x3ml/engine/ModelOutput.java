@@ -70,6 +70,11 @@ public class ModelOutput implements Output {
     public Model getModel() {
         return model;
     }
+
+    @Override
+    public void close() {
+        model.close();        
+    }
     
     public String getNamespace(TypeElement typeElement){
         if (typeElement == null) {

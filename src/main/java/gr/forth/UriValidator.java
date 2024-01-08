@@ -54,13 +54,13 @@ public class UriValidator {
      * @return the encoded URI string */
     public static URI encodeURI(String uriString){
         try{
-            log.debug("Checking it the given value is a valid URI: '"+uriString+"'");
+            log.debug("Checking it the given value is a valid URI: '{}'", uriString);
             if(new URI(uriString).isAbsolute()){
-                log.debug("The URI ('"+uriString+"') is OK");
+                log.debug("The URI ('{}') is OK", uriString);
                 return new URI(uriString);
             }
         }catch(URISyntaxException ex){
-            log.debug("The given URI string ('"+uriString+"')is not a valid URI");
+            log.debug("The given URI string ('{}')is not a valid URI", uriString);
         }
         return UriComponentsBuilder.fromUriString(uriString).build().encode().toUri();
     }
