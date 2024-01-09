@@ -44,9 +44,9 @@ public class TextualContent implements CustomGenerator{
     @Override
     public void setArg(String name, String value) throws CustomGeneratorException {
         if(name.startsWith(Labels.TEXT)){
-            log.debug("Setting UUID for text: "+value+"\t (length: "+value.length()+")");
+            log.debug("Setting UUID for text: {}\t (length: {})", value, value.length());
             this.text=java.util.UUID.nameUUIDFromBytes(value.getBytes()).toString();
-            log.debug("Created UUID for text: "+value+"\t UUID: "+this.text+")");
+            log.debug("Created UUID for text: {}\t UUID: {})", value, this.text);
         }else{
             throw new CustomGeneratorException("Unrecognized argument name: "+ name);
         }

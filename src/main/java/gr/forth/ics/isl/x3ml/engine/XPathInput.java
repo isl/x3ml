@@ -35,6 +35,8 @@ import java.util.TreeMap;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.GeneratorElement;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.Helper.argVal;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.SourceType;
+
+import gr.forth.IterableNodeList;
 import gr.forth.Labels;
 import gr.forth.Utils;
 import java.io.StringWriter;
@@ -47,6 +49,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
 import lombok.extern.log4j.Log4j2;
+import net.sf.saxon.dom.DOMNodeList;
+
 import static org.joox.JOOX.$;
 
 /**
@@ -68,6 +72,7 @@ public class XPathInput {
     public static String domainURIForNamedgraps=null;
     public static String entireInputExportedRefUri=null;
     private Map<String, Map<String, List<Node>>> rangeMapCache = new TreeMap<String, Map<String, List<Node>>>();
+    private static Map<String, XPathExpression> regexCache = new HashMap<>();
 
     public XPathInput(Node rootNode, NamespaceContext namespaceContext, String languageFromMapping) {
         this.rootNode = rootNode;
@@ -76,12 +81,8 @@ public class XPathInput {
     }
 
     public X3ML.ArgValue evaluateArgument(Node node, int index, GeneratorElement generatorElement, String argName, SourceType defaultType, boolean mergeMultipleValues) {
-        log.debug("Evaluating argument: [Node: "+node+"\t"+
-                                        "Index: "+index+"\t"+
-                                        "Generator: "+generatorElement+"\t"+
-                                        "ArgName: "+argName+"\t"+
-                                        "DefaultType: "+defaultType+"\t"+
-                                        "MergeMultipleValues: "+mergeMultipleValues+"]");
+        log.debug("Evaluating argument: [Node: {}\tIndex: {}\tGenerator: {}\tArgName: {}\tDefaultType: {}\tMergeMultipleValues: {}]",
+                                        node, index, generatorElement, argName, defaultType, mergeMultipleValues);
         X3ML.GeneratorArg foundArg = null;
         SourceType type = defaultType;
         if (generatorElement.getArgs() != null) {
@@ -214,11 +215,10 @@ public class XPathInput {
      * @return the value of the node, after evaluating the given XPath expression */
     public String valueAt(Node node, String expression) {
         try{
-            log.debug("Evaluating XPATH [Node: "+node+" Expression: "+expression+"]");
-            XPathExpression xe = xpath().compile(expression);
-            
+            log.debug("Evaluating XPATH [Node: {} Expression: {}]", node, expression);
+            XPathExpression xe = this.getCompiledExpression(expression);
             String value=((String)xe.evaluate(node, XPathConstants.STRING)).trim();
-            log.debug("XPATH Result: "+value+" (length= "+value.length()+")");
+            log.debug("XPATH Result: {} (length= {})", value, value.length());
             return value;
         }catch(XPathExpressionException ex){
             throw new RuntimeException("XPath Problem: " + expression, ex);
@@ -249,12 +249,11 @@ public class XPathInput {
      * @param expression the XPath expression that will be evaluated on the given node
      * @return the number of results */
     public int countNodes(Node node, String expression) {
-        List<Node> nodes = nodeList(node, expression);
-        return nodes.size();
+        return nodeList(node, expression).size();
     }
     
     public boolean existingNode(Node node, String expression) {
-        List<Node> nodes = nodeList(node, expression);
+        IterableNodeList nodes = nodeList(node, expression);
         
         if (nodes.isEmpty()) {
             return false;
@@ -271,33 +270,28 @@ public class XPathInput {
     }
     
     
-    public List<Node> nodeList(Node node, X3ML.Source source) {
+    public IterableNodeList nodeList(Node node, X3ML.Source source) {
         if (source != null) {
             return nodeList(node, source.expression);
         } else {
-            List<Node> list = new ArrayList<Node>(1);
+            List<Node> list = new ArrayList<>(1);
             list.add(node);
-            return list;
+            return new IterableNodeList(new DOMNodeList(list));
         }
     }
 
-    public List<Node> nodeList(Node context, String expression) {
-        log.debug("Evaluating XPATH [Node: "+context+" Expression: "+expression+"]");
+    public IterableNodeList nodeList(Node context, String expression) {
+        log.debug("Evaluating XPATH [Node: {} Expression: {}]", context, expression);
 
         if (expression == null || expression.length() == 0) {
             List<Node> list = new ArrayList<>(1);
             list.add(context);
-            return list;
+            return new IterableNodeList(new DOMNodeList(list));
         }
         try {
-            XPathExpression xe = xpath().compile(expression);
+            XPathExpression xe = this.getCompiledExpression(expression);
             NodeList nodeList = (NodeList) xe.evaluate(context, XPathConstants.NODESET);
-            int nodesReturned = nodeList.getLength();
-            List<Node> list = new ArrayList<>(nodesReturned);
-            for (int index = 0; index < nodesReturned; index++) {
-                list.add(nodeList.item(index));
-            }
-            return list;
+            return new IterableNodeList(nodeList);
         } catch (XPathExpressionException e) {
             throw new RuntimeException("XPath Problem: " + expression, e);
         }
@@ -401,6 +395,23 @@ public class XPathInput {
         }catch(IllegalArgumentException | TransformerException |TransformerFactoryConfigurationError ex){
             throw exception("",ex);
         }
+    }
+
+    // because compilation of regex is very expensive we are doing it only once
+    // and then we cache the compiled regex and reuse it
+    private XPathExpression getCompiledExpression(String expression) {
+        XPathExpression xe;
+        if (regexCache.containsKey(expression)) {
+            xe = regexCache.get(expression);
+        } else {
+            try {
+                xe = xpath().compile(expression);
+            } catch (XPathExpressionException e) {
+                throw new RuntimeException(e);
+            }
+            regexCache.put(expression, xe);
+        }
+        return xe;
     }
 
 }
