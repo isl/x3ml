@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<record>
+  <leader>13826nkc a2202221 a 4500</leader>
+  <controlfield tag="001">991013309269707141</controlfield>
+  <controlfield tag="008">110428k15271527xx nnn |      |   cneng|d</controlfield>
+  
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Sir Thomas More.</subfield>
+  </datafield>
+  <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="c">1527.</subfield>
+  </datafield>
+</record>

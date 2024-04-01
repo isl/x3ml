@@ -1,0 +1,38 @@
+<associationTableEntries>
+    <associationTableEntry>
+        <xpath>/record[1]</xpath>
+        <value>http://vocab.getty.edu/aat/300133025</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]</xpath>
+        <value>https://artresearch.net/resource/frick/work/991013309269707141</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/controlfield[2]</xpath>
+        <value>https://artresearch.net/resource/frick/work/991013309269707141/production</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/controlfield[2]</xpath>
+        <value>https://artresearch.net/resource/frick/work/991013309269707141/production/timespan</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/controlfield[2]/substring(substring-after(text(), 'k'), 1, 4)</xpath>
+        <value>"1527-12-31T23:59:59"</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/controlfield[2]/substring(substring-after(text(), 'k'), 5, 4)</xpath>
+        <value>"1527-01-01T00:00:00"</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/datafield[2]/subfield[1]</xpath>
+        <value>https://artresearch.net/resource/frick/work/991013309269707141/production-timespan-appellation/F38A46F2-D8E8-3427-8010-70AA0BAB25FC</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/datafield[2]/subfield[1]/text()</xpath>
+        <value>"1527."</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/datafield[@tag="245"][1]/subfield[@code="a"][1]/text()</xpath>
+        <value>"Sir Thomas More."</value>
+    </associationTableEntry>
+</associationTableEntries>

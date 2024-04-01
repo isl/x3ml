@@ -19,6 +19,7 @@ under the License.
 package gr.forth.ics.isl.x3ml.engine;
 
 import gr.forth.ics.isl.x3ml.X3MLEngine;
+import gr.forth.ics.isl.x3ml.engine.X3ML.GeneratedType;
 import org.w3c.dom.Node;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.ArgValue;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.Condition;
@@ -170,9 +171,7 @@ public abstract class GeneratorContext {
                     });
                     put(variable_deprecated,VariableScope.WITHIN_MAPPING, generatedValue);
                     context.putGeneratedValue(extractXPath(node) + unique+"-"+variable, generatedValue);
-                    if(X3MLEngine.ENABLE_ASSOCIATION_TABLE){
-                        this.createAssociationTable(generatedValue, null, extractAssocTableXPath(node));
-                    }
+                    this.createAssociationTable(generatedValue, generator, node);
                 }
             }else{
 //                String nodeName = extractXPath(node) + unique+"-"+typeAwareVar;
@@ -197,21 +196,9 @@ public abstract class GeneratorContext {
                             }
                         }
                     });
-                    GeneratedValue genArg=null;
-                    if(generator.getName().equalsIgnoreCase("Literal")){
-                        genArg = context.policy().generate(generator, new Generator.ArgValues() {
-                            @Override
-                            public ArgValue getArgValue(String name, SourceType sourceType, boolean mergeMultipleValues) {
-                                return context.input().evaluateArgument2(node, index, generator, name, sourceType);
-
-                            }
-                        });
-                    }
                     log.debug("put generated value: {}\t{}", nodeName, generatedValue);
                     context.putGeneratedValue(nodeName, generatedValue);
-                    if(X3MLEngine.ENABLE_ASSOCIATION_TABLE){
-                        this.createAssociationTable(generatedValue, genArg, extractAssocTableXPath(node));
-                    }
+                    this.createAssociationTable(generatedValue, generator, node);
                 }
             }
         }
@@ -254,20 +241,8 @@ public abstract class GeneratorContext {
                             }
                         }
                     });
-                    GeneratedValue genArg=null;
-                    if(generator.getName().equalsIgnoreCase("Literal")){
-                        genArg = context.policy().generate(generator, new Generator.ArgValues() {
-                            @Override
-                            public ArgValue getArgValue(String name, SourceType sourceType, boolean mergeMultipleValues) {
-                                return context.input().evaluateArgument2(node, index, generator, name, sourceType);
-
-                            }
-                        });
-                    }
                     context.putGeneratedValue(nodeName, generatedValue);
-                    if(X3MLEngine.ENABLE_ASSOCIATION_TABLE){
-                        this.createAssociationTable(generatedValue, genArg, extractAssocTableXPath(node));
-                    }
+                    this.createAssociationTable(generatedValue, generator, node);
                 }
             }
         }
@@ -315,16 +290,6 @@ public abstract class GeneratorContext {
                     }
                 }
             });
-            GeneratedValue genArg=null;
-            if(generator.getName().equalsIgnoreCase("Literal")){
-                genArg = context.policy().generate(generator, new Generator.ArgValues() {
-                    @Override
-                    public ArgValue getArgValue(String name, SourceType sourceType, boolean mergeMultipleValues) {
-                        return context.input().evaluateArgument2(node, index, generator, name, sourceType);
-
-                    }
-                });
-            }
         }
             
         context.putGeneratedValue(nodeName, generatedValue);
@@ -338,21 +303,38 @@ public abstract class GeneratorContext {
         return condition != null && condition.failure(context);
     }
 
-    private void createAssociationTable(GeneratedValue generatedValue, GeneratedValue generatedArg, String xpathProper){
-        String value="";
-        if(generatedValue.type == X3ML.GeneratedType.LITERAL){
-            value="\""+generatedValue.text+"\"";
+    private void createAssociationTable(GeneratedValue generatedValue, GeneratorElement generator, Node node){
+        if(X3MLEngine.ENABLE_ASSOCIATION_TABLE) {
+            String xpathProper = extractAssocTableXPath(node);
+
+            String value="";
+            if(generatedValue.type == GeneratedType.LITERAL || generatedValue.type == GeneratedType.TYPED_LITERAL) {
+                // we assume that there is argument named text for generators that generate Literal or Typed Literals
+                // and that this argument is of type xpath
+                String generatedArg = 
+                    generator.getArgs()
+                        .stream()
+                        .filter(arg -> SourceType.xpath.name().equals(arg.type))
+                        .findFirst()
+                        // in case of multiple intermediary elements we re-write xpath to always point to the first one
+                        // because this is a default behaviour of non merging generators
+                        .map(arg -> arg.value.replaceAll("/", "[1]/"))
+                        .orElse(null);
+
+                value="\""+generatedValue.text+"\"";
+                if(generatedArg != null)
+                    xpathProper+="/"+generatedArg;
+                else
+                    xpathProper+="/text()";
+            }
+            else if(generatedValue.type == X3ML.GeneratedType.URI) {
+                value=generatedValue.text;
+            }
             
-            if(generatedArg!=null)
-                xpathProper+="/"+generatedArg.text;
-            else
-                xpathProper+="/text()";
-        }
-        else if(generatedValue.type == X3ML.GeneratedType.URI)
-            value=generatedValue.text;
             if(xpathProper!=null){  //Needs a little more inspection this
                 AssociationTable.addEntry(xpathProper,value);
             }
+        }
     }
     
     /**Adds a new entry in the association table with the given XPATH expression and 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generator_policy>
+    <generator name="IdentifierURI" prefix="prefix" shorten="yes">
+        <pattern>{subject_type}/{subject_id}/{identifier_type}/{identifier_id}</pattern>
+    </generator>
+    <generator name="URIwithTypeAndId" prefix="prefix">
+        <pattern>{type}/{id}</pattern>
+    </generator>
+    <generator name="URIorUUID">
+        <custom generatorClass="gr.forth.URIorUUID">
+            <set-arg name="text"></set-arg>
+        </custom>
+    </generator>
+    <generator name="URIwithType" prefix="prefix" shorten="yes">
+        <pattern>{type}/{id}</pattern>
+    </generator>
+    <generator name="EventUri" prefix="prefix" type="any">
+        <pattern>{resourceType}/{resourceId}/{eventType}</pattern>
+    </generator>
+    <generator name="TimespanUri" prefix="prefix" type="any">
+        <pattern>{resourceType}/{resourceId}/{eventType}/timespan</pattern>
+    </generator>
+    <generator name="Date">
+        <custom generatorClass="gr.forth.DateNormalizer">
+            <set-arg name="bound" type="constant"/>
+            <set-arg name="report" type="constant"/>
+            <set-arg name="text"/>
+        </custom>
+    </generator>
+</generator_policy>
