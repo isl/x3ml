@@ -33,8 +33,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.w3c.dom.Attr;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
@@ -316,9 +319,7 @@ public abstract class GeneratorContext {
                         .stream()
                         .filter(arg -> SourceType.xpath.name().equals(arg.type))
                         .findFirst()
-                        // in case of multiple intermediary elements we re-write xpath to always point to the first one
-                        // because this is a default behaviour of non merging generators
-                        .map(arg -> arg.value.replaceAll("/", "[1]/"))
+                        .map(arg -> this.rewriteArgXPath(arg.value))
                         .orElse(null);
 
                 value="\""+generatedValue.text+"\"";
@@ -335,6 +336,31 @@ public abstract class GeneratorContext {
                 AssociationTable.addEntry(xpathProper,value);
             }
         }
+    }
+
+    private final Pattern NUMERIC_INDEX_PATTERN = Pattern.compile(".*\\[\\d+\\]$");
+    private final Pattern FUNCTION_PATTERN = Pattern.compile(".*\\(.*\\)$");
+
+    /**
+     * In case of multiple intermediary elements we re-write xpath to always point to the first one
+     * because this is a default behaviour of non merging generators
+     */
+    public String rewriteArgXPath(String xpath) {
+        String[] segments = xpath.split("/");
+
+        for (int i = 0; i < segments.length; i++) {
+            String segment = segments[i];
+
+             // Check if segment is not a function call, not a relative path, 
+             // and does not already contain indexed access
+            if (!segment.isEmpty() && !segment.equals(".") && !segment.equals("..") 
+                && !NUMERIC_INDEX_PATTERN.matcher(segment).matches() 
+                && !FUNCTION_PATTERN.matcher(segment).matches()) {
+                segments[i] = segment + "[1]";
+            }
+        }
+
+        return Arrays.stream(segments).collect(Collectors.joining("/"));
     }
     
     /**Adds a new entry in the association table with the given XPATH expression and 

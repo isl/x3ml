@@ -148,6 +148,40 @@
                </target_node>
             </range>
          </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>datafield[@ind2="0" and @tag="650"]/subfield[@code="a"]</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>crm:P65_shows_visual_item</relationship>
+                  <entity>
+                     <type>crm:E36_Visual_Item</type>
+                     <instance_generator name="SubjectUri">
+                        <arg name="resourceType" type="constant">work</arg>
+                        <arg name="resourceId" type="xpath">/record/controlfield[@tag="001"]</arg>
+                        <arg name="subject_id" type="xpath">../../datafield[@ind2="7" and @tag="650"]/subfield[@code="a"]/text()</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">../../datafield[@ind2="7" and @tag="650"]/subfield[@code="a"]/text()</arg>
+                     </label_generator>
+                  </entity>
+                  <relationship>crm:P2_has_type</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>datafield[@ind2="0" and @tag="650"]/subfield[@code="a"]</source_node>
+               <target_node>
+                  <entity>
+                     <type>custom:noType</type>
+                     <instance_generator name="URIwithType">
+                        <arg name="type" type="constant">type</arg>
+                        <arg name="id" type="xpath">text()</arg>
+                     </instance_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
       </mapping>
    </mappings>
 </x3ml>

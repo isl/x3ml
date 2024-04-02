@@ -27,4 +27,7 @@
             <set-arg name="text"/>
         </custom>
     </generator>
+    <generator name="SubjectUri" prefix="prefix" shorten="yes" type="any">
+      <pattern>{resourceType}/{resourceId}/subject/{subject_id}</pattern>
+   </generator>
 </generator_policy>

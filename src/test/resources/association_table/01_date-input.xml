@@ -10,4 +10,12 @@
   <datafield tag="260" ind1=" " ind2=" ">
     <subfield code="c">1527.</subfield>
   </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">Art, German.</subfield>
+    <subfield code="0">http://id.loc.gov/authorities/subjects/sh85007675</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="7">
+    <subfield code="a">Portraits: Men: With hands: With hats: Head to right.</subfield>
+    <subfield code="2">local</subfield>
+  </datafield>
 </record>
