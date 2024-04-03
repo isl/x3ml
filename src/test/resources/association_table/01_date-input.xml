@@ -10,6 +10,15 @@
   <datafield tag="260" ind1=" " ind2=" ">
     <subfield code="c">1527.</subfield>
   </datafield>
+  <datafield tag="590" ind1="1" ind2=" ">
+    <subfield code="a">Frick Collection,</subfield>
+    <subfield code="b">New York,</subfield>
+    <subfield code="c">New York,</subfield>
+    <subfield code="d">United States,</subfield>
+    <subfield code="e">Henry Clay Frick Bequest,</subfield>
+    <subfield code="f">1912.1.77,</subfield>
+    <subfield code="g">public.</subfield>
+  </datafield>
   <datafield tag="650" ind1=" " ind2="0">
     <subfield code="a">Art, German.</subfield>
     <subfield code="0">http://id.loc.gov/authorities/subjects/sh85007675</subfield>

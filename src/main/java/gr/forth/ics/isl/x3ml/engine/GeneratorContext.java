@@ -33,11 +33,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayDeque;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.w3c.dom.Attr;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
@@ -346,21 +346,55 @@ public abstract class GeneratorContext {
      * because this is a default behaviour of non merging generators
      */
     public String rewriteArgXPath(String xpath) {
-        String[] segments = xpath.split("/");
+        // because we need to add [1] to every tag without index, 
+        // but at the same time don't messup with function calls we are spliting xpath on "/"
+        // but doing this only if "/" is not inside function call or attribtue acces
+        List<String> segments = new ArrayList<>();
+        int lastSegmentStart = 0;
+        int bracketDepth = 0;
+        int parenthesisDepth = 0;
 
-        for (int i = 0; i < segments.length; i++) {
-            String segment = segments[i];
+        for (int i = 0; i < xpath.length(); i++) {
+            char ch = xpath.charAt(i);
+            if (ch == '[') {
+                bracketDepth++;
+            } else if (ch == ']') {
+                bracketDepth--;
+            } else if (ch == '(') {
+                parenthesisDepth++;
+            } else if (ch == ')') {
+                parenthesisDepth--;
+            } else if (ch == '/' && bracketDepth == 0 && parenthesisDepth == 0 && i != 0) {
+                // we are not inside function call or attribute access
 
-             // Check if segment is not a function call, not a relative path, 
-             // and does not already contain indexed access
-            if (!segment.isEmpty() && !segment.equals(".") && !segment.equals("..") 
-                && !NUMERIC_INDEX_PATTERN.matcher(segment).matches() 
-                && !FUNCTION_PATTERN.matcher(segment).matches()) {
-                segments[i] = segment + "[1]";
+                // Check for double slash
+                if (i + 1 < xpath.length() && xpath.charAt(i + 1) == '/') {
+                    i++; // Skip the next slash
+                }
+
+                // If i is not 0, add the substring excluding the slash
+                if (i != 0) {
+                    segments.add(xpath.substring(lastSegmentStart, i));
+                }
+                lastSegmentStart = i + 1; // Move past the slash for the start of the next segment
             }
         }
 
-        return Arrays.stream(segments).collect(Collectors.joining("/"));
+        segments.add(xpath.substring(lastSegmentStart)); // Add the last segment
+
+        for (int i = 0; i < segments.size(); i++) {
+            String segment = segments.get(i);
+            // Check if segment is not a function call, not a relative path, 
+            // and does not already contain indexed access
+            if (!segment.isEmpty() && !segment.equals(".") && !segment.equals("..") 
+                && !NUMERIC_INDEX_PATTERN.matcher(segment).matches() 
+                && !FUNCTION_PATTERN.matcher(segment).matches()) {
+                segments.set(i, segment + "[1]");
+            }
+        }
+
+        // re-construct xpath
+        return String.join("/", segments);
     }
     
     /**Adds a new entry in the association table with the given XPATH expression and 

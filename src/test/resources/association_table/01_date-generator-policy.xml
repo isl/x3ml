@@ -30,4 +30,10 @@
     <generator name="SubjectUri" prefix="prefix" shorten="yes" type="any">
       <pattern>{resourceType}/{resourceId}/subject/{subject_id}</pattern>
    </generator>
+    <generator name="AcquisitionUri" prefix="prefix" shorten="yes" type="any">
+      <pattern>{resourceType}/{resourceId}/{eventType}/{from}{to}{timespan}</pattern>
+   </generator>  
+   <generator name="AcquisitionCurrentLocation" type="any">
+      <pattern>Location: {To} Acquisition: {Type} {Date}</pattern>
+   </generator>  
 </generator_policy>

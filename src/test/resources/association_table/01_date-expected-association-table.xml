@@ -32,15 +32,27 @@
         <value>"1527."</value>
     </associationTableEntry>
     <associationTableEntry>
-        <xpath>/record[1]/datafield[3]/subfield[1]</xpath>
+        <xpath>/record[1]/datafield[3]/subfield[5]</xpath>
+        <value>https://artresearch.net/resource/frick/type/5B02D2E1-391B-3BF8-9813-758D731C7183</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/datafield[3]/subfield[5]</xpath>
+        <value>https://artresearch.net/resource/frick/work/991013309269707141/acquisition/94D0DF61-CB3E-3D02-B669-4A6F2A4F189F</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/datafield[3]/subfield[5]/string-join((../subfield[@code="a"]/text(),"-"),' ')</xpath>
+        <value>"Location: Frick Collection, - Acquisition: Henry Clay Frick Bequest, - -"</value>
+    </associationTableEntry>
+    <associationTableEntry>
+        <xpath>/record[1]/datafield[4]/subfield[1]</xpath>
         <value>https://artresearch.net/resource/frick/type/8E0AC9AA-3D9D-357A-984E-9B1E52105392</value>
     </associationTableEntry>
     <associationTableEntry>
-        <xpath>/record[1]/datafield[3]/subfield[1]</xpath>
+        <xpath>/record[1]/datafield[4]/subfield[1]</xpath>
         <value>https://artresearch.net/resource/frick/work/991013309269707141/subject/54F23224-5B7B-3276-8C6D-16F231A0A4BB</value>
     </associationTableEntry>
     <associationTableEntry>
-        <xpath>/record[1]/datafield[3]/subfield[1]/../../datafield[@ind2="7" and @tag="650"][1]/subfield[@code="a"][1]/text()</xpath>
+        <xpath>/record[1]/datafield[4]/subfield[1]/../../datafield[@ind2="7" and @tag="650"][1]/subfield[@code="a"][1]/text()</xpath>
         <value>"Portraits: Men: With hands: With hats: Head to right."</value>
     </associationTableEntry>
     <associationTableEntry>

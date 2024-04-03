@@ -10,6 +10,7 @@
       <namespace prefix="owl" uri="http://www.w3.org/2002/07/owl#"/>
       <namespace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
       <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
+      <namespace prefix="custom" uri="https://artresearch.net/custom/"/>
    </namespaces>
    <mappings>
       <mapping>
@@ -171,6 +172,45 @@
             </path>
             <range>
                <source_node>datafield[@ind2="0" and @tag="650"]/subfield[@code="a"]</source_node>
+               <target_node>
+                  <entity>
+                     <type>custom:noType</type>
+                     <instance_generator name="URIwithType">
+                        <arg name="type" type="constant">type</arg>
+                        <arg name="id" type="xpath">text()</arg>
+                     </instance_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>datafield[@tag="590" and @ind1="1"]/subfield[@code="e"]</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>crm:P24i_changed_ownership_through</relationship>
+                  <entity>
+                     <type>crm:E8_Acquisition</type>
+                     <instance_generator name="AcquisitionUri">
+                        <arg name="resourceType" type="constant">work</arg>
+                        <arg name="resourceId" type="xpath">/record/controlfield[@tag="001"]</arg>
+                        <arg name="eventType" type="constant">acquisition</arg>
+                        <arg name="from" type="constant">-</arg>
+                        <arg name="to" type="xpath">../subfield[@code="a"]/text()</arg>
+                        <arg name="timespan" type="constant">-</arg>
+                     </instance_generator>
+                     <label_generator name="AcquisitionCurrentLocation">
+                        <arg name="To" type="xpath">string-join((../subfield[@code="a"]/text(),"-"),' ')</arg>
+                        <arg name="Type" type="xpath">string-join((text(),"-"),' ')</arg>
+                        <arg name="Date" type="xpath">string-join((../subfield[@code="l"]/text(),"-"),' ')</arg>
+                     </label_generator>
+                  </entity>
+                  <relationship>crm:P2_has_type</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>datafield[@tag="590" and @ind1="1"]/subfield[@code="e"]</source_node>
                <target_node>
                   <entity>
                      <type>custom:noType</type>
