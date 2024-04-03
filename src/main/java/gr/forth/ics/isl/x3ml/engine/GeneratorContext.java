@@ -19,6 +19,7 @@ under the License.
 package gr.forth.ics.isl.x3ml.engine;
 
 import gr.forth.ics.isl.x3ml.X3MLEngine;
+import gr.forth.ics.isl.x3ml.engine.X3ML.GeneratedType;
 import org.w3c.dom.Node;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.ArgValue;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.Condition;
@@ -32,8 +33,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import org.w3c.dom.Attr;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
@@ -170,9 +174,7 @@ public abstract class GeneratorContext {
                     });
                     put(variable_deprecated,VariableScope.WITHIN_MAPPING, generatedValue);
                     context.putGeneratedValue(extractXPath(node) + unique+"-"+variable, generatedValue);
-                    if(X3MLEngine.ENABLE_ASSOCIATION_TABLE){
-                        this.createAssociationTable(generatedValue, null, extractAssocTableXPath(node));
-                    }
+                    this.createAssociationTable(generatedValue, generator, node);
                 }
             }else{
 //                String nodeName = extractXPath(node) + unique+"-"+typeAwareVar;
@@ -197,21 +199,9 @@ public abstract class GeneratorContext {
                             }
                         }
                     });
-                    GeneratedValue genArg=null;
-                    if(generator.getName().equalsIgnoreCase("Literal")){
-                        genArg = context.policy().generate(generator, new Generator.ArgValues() {
-                            @Override
-                            public ArgValue getArgValue(String name, SourceType sourceType, boolean mergeMultipleValues) {
-                                return context.input().evaluateArgument2(node, index, generator, name, sourceType);
-
-                            }
-                        });
-                    }
                     log.debug("put generated value: {}\t{}", nodeName, generatedValue);
                     context.putGeneratedValue(nodeName, generatedValue);
-                    if(X3MLEngine.ENABLE_ASSOCIATION_TABLE){
-                        this.createAssociationTable(generatedValue, genArg, extractAssocTableXPath(node));
-                    }
+                    this.createAssociationTable(generatedValue, generator, node);
                 }
             }
         }
@@ -254,20 +244,8 @@ public abstract class GeneratorContext {
                             }
                         }
                     });
-                    GeneratedValue genArg=null;
-                    if(generator.getName().equalsIgnoreCase("Literal")){
-                        genArg = context.policy().generate(generator, new Generator.ArgValues() {
-                            @Override
-                            public ArgValue getArgValue(String name, SourceType sourceType, boolean mergeMultipleValues) {
-                                return context.input().evaluateArgument2(node, index, generator, name, sourceType);
-
-                            }
-                        });
-                    }
                     context.putGeneratedValue(nodeName, generatedValue);
-                    if(X3MLEngine.ENABLE_ASSOCIATION_TABLE){
-                        this.createAssociationTable(generatedValue, genArg, extractAssocTableXPath(node));
-                    }
+                    this.createAssociationTable(generatedValue, generator, node);
                 }
             }
         }
@@ -315,16 +293,6 @@ public abstract class GeneratorContext {
                     }
                 }
             });
-            GeneratedValue genArg=null;
-            if(generator.getName().equalsIgnoreCase("Literal")){
-                genArg = context.policy().generate(generator, new Generator.ArgValues() {
-                    @Override
-                    public ArgValue getArgValue(String name, SourceType sourceType, boolean mergeMultipleValues) {
-                        return context.input().evaluateArgument2(node, index, generator, name, sourceType);
-
-                    }
-                });
-            }
         }
             
         context.putGeneratedValue(nodeName, generatedValue);
@@ -338,21 +306,95 @@ public abstract class GeneratorContext {
         return condition != null && condition.failure(context);
     }
 
-    private void createAssociationTable(GeneratedValue generatedValue, GeneratedValue generatedArg, String xpathProper){
-        String value="";
-        if(generatedValue.type == X3ML.GeneratedType.LITERAL){
-            value="\""+generatedValue.text+"\"";
+    private void createAssociationTable(GeneratedValue generatedValue, GeneratorElement generator, Node node){
+        if(X3MLEngine.ENABLE_ASSOCIATION_TABLE) {
+            String xpathProper = extractAssocTableXPath(node);
+
+            String value="";
+            if(generatedValue.type == GeneratedType.LITERAL || generatedValue.type == GeneratedType.TYPED_LITERAL) {
+                // we assume that there is argument named text for generators that generate Literal or Typed Literals
+                // and that this argument is of type xpath
+                String generatedArg = 
+                    generator.getArgs()
+                        .stream()
+                        .filter(arg -> SourceType.xpath.name().equals(arg.type))
+                        .findFirst()
+                        .map(arg -> this.rewriteArgXPath(arg.value))
+                        .orElse(null);
+
+                value="\""+generatedValue.text+"\"";
+                if(generatedArg != null)
+                    xpathProper+="/"+generatedArg;
+                else
+                    xpathProper+="/text()";
+            }
+            else if(generatedValue.type == X3ML.GeneratedType.URI) {
+                value=generatedValue.text;
+            }
             
-            if(generatedArg!=null)
-                xpathProper+="/"+generatedArg.text;
-            else
-                xpathProper+="/text()";
-        }
-        else if(generatedValue.type == X3ML.GeneratedType.URI)
-            value=generatedValue.text;
             if(xpathProper!=null){  //Needs a little more inspection this
                 AssociationTable.addEntry(xpathProper,value);
             }
+        }
+    }
+
+    private final Pattern NUMERIC_INDEX_PATTERN = Pattern.compile(".*\\[\\d+\\]$");
+    private final Pattern FUNCTION_PATTERN = Pattern.compile(".*\\(.*\\)$");
+
+    /**
+     * In case of multiple intermediary elements we re-write xpath to always point to the first one
+     * because this is a default behaviour of non merging generators
+     */
+    public String rewriteArgXPath(String xpath) {
+        // because we need to add [1] to every tag without index, 
+        // but at the same time don't messup with function calls we are spliting xpath on "/"
+        // but doing this only if "/" is not inside function call or attribtue acces
+        List<String> segments = new ArrayList<>();
+        int lastSegmentStart = 0;
+        int bracketDepth = 0;
+        int parenthesisDepth = 0;
+
+        for (int i = 0; i < xpath.length(); i++) {
+            char ch = xpath.charAt(i);
+            if (ch == '[') {
+                bracketDepth++;
+            } else if (ch == ']') {
+                bracketDepth--;
+            } else if (ch == '(') {
+                parenthesisDepth++;
+            } else if (ch == ')') {
+                parenthesisDepth--;
+            } else if (ch == '/' && bracketDepth == 0 && parenthesisDepth == 0 && i != 0) {
+                // we are not inside function call or attribute access
+
+                // Check for double slash
+                if (i + 1 < xpath.length() && xpath.charAt(i + 1) == '/') {
+                    i++; // Skip the next slash
+                }
+
+                // If i is not 0, add the substring excluding the slash
+                if (i != 0) {
+                    segments.add(xpath.substring(lastSegmentStart, i));
+                }
+                lastSegmentStart = i + 1; // Move past the slash for the start of the next segment
+            }
+        }
+
+        segments.add(xpath.substring(lastSegmentStart)); // Add the last segment
+
+        for (int i = 0; i < segments.size(); i++) {
+            String segment = segments.get(i);
+            // Check if segment is not a function call, not a relative path, 
+            // and does not already contain indexed access
+            if (!segment.isEmpty() && !segment.equals(".") && !segment.equals("..") 
+                && !NUMERIC_INDEX_PATTERN.matcher(segment).matches() 
+                && !FUNCTION_PATTERN.matcher(segment).matches()) {
+                segments.set(i, segment + "[1]");
+            }
+        }
+
+        // re-construct xpath
+        return String.join("/", segments);
     }
     
     /**Adds a new entry in the association table with the given XPATH expression and 
