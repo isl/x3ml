@@ -39,6 +39,10 @@ import static gr.forth.ics.isl.x3ml.engine.X3ML.SourceType;
 import gr.forth.IterableNodeList;
 import gr.forth.Labels;
 import gr.forth.Utils;
+import gr.forth.ics.isl.x3ml.engine.X3ML.GeneratorElement;
+import gr.forth.ics.isl.x3ml.engine.X3ML.SourceType;
+import gr.forth.ics.isl.x3ml.engine.xpath.UUIDFunction_v3;
+
 import java.io.StringWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -49,6 +53,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import static gr.forth.ics.isl.x3ml.X3MLEngine.exception;
 import lombok.extern.log4j.Log4j2;
+import net.sf.saxon.Configuration;
 import net.sf.saxon.dom.DOMNodeList;
 
 import static org.joox.JOOX.$;
@@ -63,9 +68,8 @@ import static org.joox.JOOX.$;
  * @author Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
  */
 @Log4j2
-public class XPathInput {
-
-    private final XPathFactory pathFactory = new net.sf.saxon.xpath.XPathFactoryImpl();
+public class XPathInput {    
+    private final XPathFactory pathFactory;
     private final NamespaceContext namespaceContext;
     private final String languageFromMapping;
     private final Node rootNode;
@@ -78,6 +82,12 @@ public class XPathInput {
         this.rootNode = rootNode;
         this.namespaceContext = namespaceContext;
         this.languageFromMapping = languageFromMapping;
+
+        // register custom xpath functions
+        net.sf.saxon.xpath.XPathFactoryImpl pathFactoryImpl = new net.sf.saxon.xpath.XPathFactoryImpl();
+        Configuration config = pathFactoryImpl.getConfiguration();
+        config.registerExtensionFunction(new UUIDFunction_v3());
+        this.pathFactory = pathFactoryImpl;
     }
 
     public X3ML.ArgValue evaluateArgument(Node node, int index, GeneratorElement generatorElement, String argName, SourceType defaultType, boolean mergeMultipleValues) {
