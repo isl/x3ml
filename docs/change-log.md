@@ -1,5 +1,11 @@
 # Change Log
 
+## 27 August 2024: V 2.2.1 (by FORTH-ICS) 
+
+* Performance improvements (([issue #162](https://github.com/isl/x3ml/issues/162)))
+* Fixes in association table generation (([issue #164](https://github.com/isl/x3ml/issues/164)))
+* fixed issue with source nodes-relations (([issue #167](https://github.com/isl/x3ml/issues/167)))
+
 ## 07 March 2023: V 2.2.0 (by FORTH-ICS) 
 
 * Shortcut for disjunctive comparisons (([issue #159](https://github.com/isl/x3ml/issues/159)))
