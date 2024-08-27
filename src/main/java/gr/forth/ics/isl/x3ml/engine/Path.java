@@ -118,6 +118,10 @@ public class Path extends GeneratorContext {
         if (range.source_node.expression.equals(expression)) {
             expression = "";
         }
+        else{
+            expression = range.source_node.expression;
+        }
+        
         if(range.source_node.skip!=null && range.source_node.skip.equalsIgnoreCase("true")){    //namedgraphURI was given
             expression="";
         }
