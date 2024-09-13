@@ -151,58 +151,6 @@ public class XPathInput {
         }
         return value;
     }
-    
-    public X3ML.ArgValue evaluateArgument2(Node node, int index, GeneratorElement generatorElement, String argName, SourceType defaultType) {
-        X3ML.GeneratorArg foundArg = null;
-        SourceType type = defaultType;
-        if (generatorElement.getArgs() != null) {
-            for (X3ML.GeneratorArg arg : generatorElement.getArgs()) {
-                if (arg.name == null) {
-                    arg.name = "text";
-                }
-                if (arg.name.equals(argName)) {
-                    foundArg = arg;
-                    type = sourceType(arg.type, defaultType);
-                }
-            }
-
-        }
-        X3ML.ArgValue value = null;
-        switch (type) {
-
-            case xpath:
-                if (foundArg == null) {
-                    return null;
-                }
-                String lang = getLanguageFromSource(node);
-                if (lang == null) {
-                    lang = languageFromMapping;
-                }
-                if (!foundArg.value.isEmpty()) {
-                    value = argVal( foundArg.value.replaceAll("/", "[1]/"), lang);
-                    if (value.string.isEmpty()) {
-                        throw exception("Empty result for arg " + foundArg.name + " at node " + node.getNodeName() + " in generator\n" + generatorElement);
-                    }
-                }
-                break;
-            case constant:
-                if (foundArg == null) {
-                    return null;
-                }
-                value = argVal(foundArg.value, languageFromMapping);
-                break;
-            case position:
-                value = argVal(String.valueOf(index), null);
-                break;
-            case entireInput:
-                value=argVal(this.getEntireXpathInput(), languageFromMapping);
-                entireInputExportedRefUri=domainURIForNamedgraps;
-                break;
-            default:
-                throw new RuntimeException("Not implemented");
-        }
-        return value;
-    }
 
     /** Returns the value that can be found in the corresponding node, after the evaluation 
      * of the given XPath expression. More specifically it returns the results after 

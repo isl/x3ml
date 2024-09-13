@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x3ml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      source_type="xpath"
+      version="1.0"
+      xsi:noNamespaceSchemaLocation="https://isl.ics.forth.gr/x3ml/schema/x3ml.xsd">
+   <namespaces>
+      <namespace prefix="prefix" uri="https://artresearch.net/resource/frick/"/>
+      <namespace prefix="xsd" uri="http://www.w3.org/2001/XMLSchema#"/>
+      <namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
+      <namespace prefix="owl" uri="http://www.w3.org/2002/07/owl#"/>
+      <namespace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+      <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
+      <namespace prefix="custom" uri="https://artresearch.net/custom/"/>
+   </namespaces>
+   <mappings>
+      <mapping>
+         <domain>
+            <source_node>/record</source_node>
+            <target_node>
+               <entity>
+                  <type>crm:E22_Human-Made_Object</type>
+                  <instance_generator name="URIwithTypeAndId">
+                     <arg name="type" type="constant">work</arg>
+                     <arg name="id" type="xpath">controlfield[@tag="001"]</arg>
+                  </instance_generator>
+                  <label_generator name="Literal">
+                     <arg name="text" type="xpath">datafield[@tag="245"]/subfield[@code="a"]/text()</arg>
+                  </label_generator>
+                  <additional>
+                     <relationship>crm:P2_has_type</relationship>
+                     <entity>
+                        <type>crm:E55_Type</type>
+                        <instance_generator name="URIorUUID">
+                           <arg name="text" type="constant">http://vocab.getty.edu/aat/300133025</arg>
+                        </instance_generator>
+                     </entity>
+                  </additional>
+               </entity>
+            </target_node>
+         </domain>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>controlfield[@tag="008"]</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>crm:P108i_was_produced_by</relationship>
+                  <entity variable="production[16]">
+                     <type>crm:E12_Production</type>
+                     <instance_generator name="EventUri">
+                        <arg name="resourceType" type="constant">work</arg>
+                        <arg name="resourceId" type="xpath">/record/controlfield[@tag="001"]</arg>
+                        <arg name="eventType" type="constant">production</arg>
+                     </instance_generator>
+                  </entity>
+                  <relationship>crm:P4_has_time-span</relationship>
+                  <entity variable="production-date[0101]">
+                     <type>crm:E52_Time-Span</type>
+                     <instance_generator name="TimespanUri">
+                        <arg name="resourceType" type="constant">work</arg>
+                        <arg name="resourceId" type="xpath">/record/controlfield[@tag="001"]</arg>
+                        <arg name="eventType" type="constant">production</arg>
+                     </instance_generator>
+                  </entity>
+                  <relationship>crm:P82a_begin_of_the_begin</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>controlfield[@tag="008"]</source_node>
+               <target_node>
+                  <entity>
+                     <type>xsd:dateTime</type>
+                     <instance_generator name="Date">
+                        <arg name="bound" type="constant">Upper</arg>
+                        <arg name="report" type="constant">Date_and_Time</arg>
+                        <arg name="text" type="xpath">substring(substring-after(text(), 'k'), 1, 4)</arg>
+                     </instance_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>controlfield[@tag="008"]</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>crm:P108i_was_produced_by</relationship>
+                  <entity variable="production[16]">
+                     <type>crm:E12_Production</type>
+                  </entity>
+                  <relationship>crm:P4_has_time-span</relationship>
+                  <entity variable="production-date[0101]">
+                     <type>crm:E52_Time-Span</type>
+                  </entity>
+                  <relationship>crm:P82b_end_of_the_end</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>controlfield[@tag="008"]</source_node>
+               <target_node>
+                  <entity>
+                     <type>xsd:dateTime</type>
+                     <instance_generator name="Date">
+                        <arg name="bound" type="constant">Lower</arg>
+                        <arg name="report" type="constant">Date_and_Time</arg>
+                        <arg name="text" type="xpath">substring(substring-after(text(), 'k'), 5, 4)</arg>
+                     </instance_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>datafield[@tag="260"]/subfield[@code="c"]</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>crm:P108i_was_produced_by</relationship>
+                  <entity variable="production[16]">
+                     <type>crm:E12_Production</type>
+                  </entity>
+                  <relationship>crm:P4_has_time-span</relationship>
+                  <entity variable="production-date[0101]">
+                     <type>crm:E52_Time-Span</type>
+                  </entity>
+                  <relationship>crm:P1_is_identified_by</relationship>
+                  <entity>
+                     <type>crm:E41_Appellation</type>
+                     <instance_generator name="IdentifierURI">
+                        <arg name="subject_type" type="constant">work</arg>
+                        <arg name="subject_id" type="xpath">/record/controlfield[@tag="001"]</arg>
+                        <arg name="identifier_type" type="constant">production-timespan-appellation</arg>
+                        <arg name="identifier_id" type="xpath">text()</arg>
+                     </instance_generator>
+                  </entity>
+                  <relationship>crm:P190_has_symbolic_content</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>datafield[@tag="260"]/subfield[@code="c"]</source_node>
+               <target_node>
+                  <entity>
+                     <type>rdfs:Literal</type>
+                     <instance_generator name="Literal">
+                        <arg name="text" type="xpath">text()</arg>
+                     </instance_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>datafield[@ind2="0" and @tag="650"]/subfield[@code="a"]</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>crm:P65_shows_visual_item</relationship>
+                  <entity>
+                     <type>crm:E36_Visual_Item</type>
+                     <instance_generator name="SubjectUri">
+                        <arg name="resourceType" type="constant">work</arg>
+                        <arg name="resourceId" type="xpath">/record/controlfield[@tag="001"]</arg>
+                        <arg name="subject_id" type="xpath">../../datafield[@ind2="7" and @tag="650"]/subfield[@code="a"]/text()</arg>
+                     </instance_generator>
+                     <label_generator name="Literal">
+                        <arg name="text" type="xpath">../../datafield[@ind2="7" and @tag="650"]/subfield[@code="a"]/text()</arg>
+                     </label_generator>
+                  </entity>
+                  <relationship>crm:P2_has_type</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>datafield[@ind2="0" and @tag="650"]/subfield[@code="a"]</source_node>
+               <target_node>
+                  <entity>
+                     <type>custom:noType</type>
+                     <instance_generator name="URIwithType">
+                        <arg name="type" type="constant">type</arg>
+                        <arg name="id" type="xpath">text()</arg>
+                     </instance_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+         <link>
+            <path>
+               <source_relation>
+                  <relation>datafield[@tag="590" and @ind1="1"]/subfield[@code="e"]</relation>
+               </source_relation>
+               <target_relation>
+                  <relationship>crm:P24i_changed_ownership_through</relationship>
+                  <entity>
+                     <type>crm:E8_Acquisition</type>
+                     <instance_generator name="AcquisitionUri">
+                        <arg name="resourceType" type="constant">work</arg>
+                        <arg name="resourceId" type="xpath">/record/controlfield[@tag="001"]</arg>
+                        <arg name="eventType" type="constant">acquisition</arg>
+                        <arg name="from" type="constant">-</arg>
+                        <arg name="to" type="xpath">../subfield[@code="a"]/text()</arg>
+                        <arg name="timespan" type="constant">-</arg>
+                     </instance_generator>
+                     <label_generator name="AcquisitionCurrentLocation">
+                        <arg name="To" type="xpath">string-join((../subfield[@code="a"]/text(),"-"),' ')</arg>
+                        <arg name="Type" type="xpath">string-join((text(),"-"),' ')</arg>
+                        <arg name="Date" type="xpath">string-join((../subfield[@code="l"]/text(),"-"),' ')</arg>
+                     </label_generator>
+                  </entity>
+                  <relationship>crm:P2_has_type</relationship>
+               </target_relation>
+            </path>
+            <range>
+               <source_node>datafield[@tag="590" and @ind1="1"]/subfield[@code="e"]</source_node>
+               <target_node>
+                  <entity>
+                     <type>custom:noType</type>
+                     <instance_generator name="URIwithType">
+                        <arg name="type" type="constant">type</arg>
+                        <arg name="id" type="xpath">text()</arg>
+                     </instance_generator>
+                  </entity>
+               </target_node>
+            </range>
+         </link>
+      </mapping>
+   </mappings>
+</x3ml>
