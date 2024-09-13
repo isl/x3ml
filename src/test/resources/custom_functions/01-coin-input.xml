@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot>
+    <COIN>
+        <ID>627</ID>
+        <COUNTRY_ID>1</COUNTRY_ID>
+        <FIND_SPOT_ID>242</FIND_SPOT_ID>
+        <FIND_MANNER_ID>2</FIND_MANNER_ID>
+        <FIND_DATE>1980er Jahre</FIND_DATE>
+        <AUTHORITY_ID>566</AUTHORITY_ID>
+        <ISSUER_ID>536</ISSUER_ID>
+        <DENOMINATION>30</DENOMINATION>
+        <MINT_ID>244</MINT_ID>
+		<MINT_MARK>mint mark</MINT_MARK>
+        <OFFICINA>99</OFFICINA>
+        <DATE_CA>0</DATE_CA>
+        <DATE_FROM>-116</DATE_FROM>
+        <DATE_TO>-115</DATE_TO>
+        <DAT_VAL>1088408850</DAT_VAL>
+        <WEIGHT>3.46</WEIGHT>
+        <DIE_AXE>4</DIE_AXE>
+        <STATUS_ID>1</STATUS_ID>
+        <RV_LEG>CN.DOMI</RV_LEG>
+        <RV_PIC>Iuppiter in Quadriga n. r. ..</RV_PIC>
+        <ARCH_INFO>-</ARCH_INFO>
+        <PH_NAME>000627</PH_NAME>
+        <DAT_TXT>116 - 115 v. Chr.</DAT_TXT>
+    </COIN>
+	<!--<COIN>
+        <ID>1627</ID>
+        <COUNTRY_ID>2</COUNTRY_ID>
+        <FIND_SPOT_ID>242</FIND_SPOT_ID>
+        <FIND_MANNER_ID>2</FIND_MANNER_ID>
+        <FIND_DATE>1980er Jahre</FIND_DATE>
+        <AUTHORITY_ID>566</AUTHORITY_ID>
+        <ISSUER_ID>536</ISSUER_ID>
+        <DENOMINATION>30</DENOMINATION>
+        <MINT_ID>244</MINT_ID>
+		<MINT_MARK>mint mark</MINT_MARK>
+        <OFFICINA>99</OFFICINA>
+        <DATE_CA>0</DATE_CA>
+        <DATE_FROM>1900-1910</DATE_FROM>
+        <DATE_TO>1950-1955</DATE_TO>
+        <DAT_VAL>1088408850</DAT_VAL>
+        <WEIGHT>3.46</WEIGHT>
+        <DIE_AXE>4</DIE_AXE>
+        <STATUS_ID>1</STATUS_ID>
+        <RV_LEG>CN.DOMI</RV_LEG>
+        <RV_PIC>Iuppiter in Quadriga n. r. ..</RV_PIC>
+        <ARCH_INFO>-</ARCH_INFO>
+        <PH_NAME>000627</PH_NAME>
+        <DAT_TXT>116 - 115 v. Chr.</DAT_TXT>
+    </COIN>-->
+    <COUNTRY>
+        <COUNTRY_ID>1</COUNTRY_ID>
+        <COUNTRY_NAME>Österreich</COUNTRY_NAME>
+        <COUNTRY_NAME_EN>Austria</COUNTRY_NAME_EN>
+    </COUNTRY>
+	<COUNTRY>
+        <COUNTRY_ID>2</COUNTRY_ID>
+        <COUNTRY_NAME>Deutchland</COUNTRY_NAME>
+        <COUNTRY_NAME_EN>Germany</COUNTRY_NAME_EN>
+    </COUNTRY>
+    <FIND_SPOT>
+        <FS_ID>242</FS_ID>
+        <FS_NAME>Mautern</FS_NAME>
+        <FS_ORDER_KEY>10</FS_ORDER_KEY>
+        <FS_S_ORDER_KEY>000020_000030_000090_000170_000010</FS_S_ORDER_KEY>
+        <EXCLUDE>0</EXCLUDE>
+    </FIND_SPOT>
+    <FIND_SPOT>
+        <FS_ID>666</FS_ID>
+        <FS_NAME>To Be Avoided</FS_NAME>
+        <FS_ORDER_KEY>10</FS_ORDER_KEY>
+        <FS_S_ORDER_KEY>9494949494949</FS_S_ORDER_KEY>
+        <EXCLUDE>0</EXCLUDE>
+    </FIND_SPOT>
+    <FIND_MANNER>
+        <FM_ID>2</FM_ID>
+        <FM_NAME>Streufund</FM_NAME>
+        <FM_NAME_EN>stray-find</FM_NAME_EN>
+    </FIND_MANNER>
+    <AUTHORITY>
+        <AUTH_ID>566</AUTH_ID>
+        <AUTH_NAME>REPUBLIK</AUTH_NAME>
+        <AUTH_NAME_EN>ROME / REPUBLIC</AUTH_NAME_EN>
+        <AUTH_ORDER_KEY>30</AUTH_ORDER_KEY>
+        <AUTH_S_ORDER_KEY>000030</AUTH_S_ORDER_KEY>
+    </AUTHORITY>
+    <ISSUER>
+        <PR_ID>536</PR_ID>
+        <PR_NAME>CN.DOMI, Q. CVRTI, M. SILA</PR_NAME>
+        <PR_NAME_EN>CN. DOMI, Q. CVRTI, M. SILA</PR_NAME_EN>
+        <PR_ORDER_KEY>940</PR_ORDER_KEY>
+        <PR_S_ORDER_KEY>000030_000940</PR_S_ORDER_KEY>
+        <EXCLUDE>0</EXCLUDE>
+    </ISSUER>
+    <DENOMINATION>
+        <DEN_ID>30</DEN_ID>
+        <DEN_NAME>D</DEN_NAME>
+        <DEN_NAME_EN>D</DEN_NAME_EN>
+        <DEN_ORDER_KEY>140</DEN_ORDER_KEY>
+        <DEN_S_ORDER_KEY>000010_000020_000140</DEN_S_ORDER_KEY>
+        <DEN_METAL>2</DEN_METAL>
+        <EXCLUDE>0</EXCLUDE>
+    </DENOMINATION>
+    <MINT>
+        <MINT_ID>244</MINT_ID>
+        <MINT_NAME>Rom (Rep.)</MINT_NAME>
+        <MINT_NAME_EN>Rome</MINT_NAME_EN>
+        <MINT_ORDER_KEY>10</MINT_ORDER_KEY>
+        <MINT_S_ORDER_KEY>000030_000010</MINT_S_ORDER_KEY>
+        <EXCLUDE>0</EXCLUDE>
+    </MINT>
+</dataroot>

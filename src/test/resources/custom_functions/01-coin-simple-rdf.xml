@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+         xmlns:crm="http://www.cidoc-crm.org/cidoc-crm/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <crm:E22_Man-Made_Object rdf:about="uuid:A">
+        <crm:P1_is_identified_by>
+            <crm:E41_Appellation rdf:about="http://example.org/185C29DC-2432-3934-AE37-7CFDA20E414C">
+                <rdfs:label>627</rdfs:label>
+            </crm:E41_Appellation>
+        </crm:P1_is_identified_by>
+    </crm:E22_Man-Made_Object>
+</rdf:RDF>
