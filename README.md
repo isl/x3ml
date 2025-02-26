@@ -94,7 +94,7 @@ To use X3ML Engine simply use the repository shown below, as well as the depende
 	<repository>
 		<id>FORTH-ISL-releases</id>
 		<name>FORTH ISL Nexus repository - Releases</name>		
-		<url>http://athena.ics.forth.gr:8081/repository/FORTH-ISL-releases/</url>
+		<url>https://isl.ics.forth.gr/maven-releases/</url>
         </repository>
 </repositories>
 
@@ -119,7 +119,7 @@ as well as the dependency for the SNAPSHOT version you are looking for.
 	<repository>
 		<id>FORTH-ISL-snapshots</id>
 		<name>FORTH ISL Nexus repository - Snapshots</name>		
-		<url>http://athena.ics.forth.gr:8081/repository/FORTH-ISL-snapshots/</url>
+		<url>https://isl.ics.forth.gr/maven-snapshots/</url>
         </repository>
 </repositories>
 
