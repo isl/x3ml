@@ -52,6 +52,7 @@ import static gr.forth.ics.isl.x3ml.engine.X3ML.Helper.x3mlStream;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.MappingNamespace;
 import static gr.forth.ics.isl.x3ml.engine.X3ML.RootElement;
 import gr.forth.ics.isl.x3ml.engine.X3ML.TargetInfo;
+import gr.forth.ics.isl.x3ml.engine.xpath.Namespace;
 import gr.forth.Labels;
 import gr.forth.Utils;
 import gr.forth.ics.isl.x3ml.engine.ModelOutput;
@@ -311,6 +312,7 @@ public class X3MLEngine {
         ((XPathContext) namespaceContext).addNamespace(Labels.XML, Labels.XML_NAMESPACE);
         prefixes.add(Labels.XML);
         ((XPathContext) namespaceContext).addNamespace(Labels.SKOS, Labels.SKOS_NAMESPACE);
+        ((XPathContext) namespaceContext).addNamespace(Namespace.CUSTOM_FUNCTIONS_PREFIX, Namespace.CUSTOM_FUNCTIONS_NAMESPACE);
         prefixes.add(Labels.SKOS);
     }
 
