@@ -1,5 +1,8 @@
 # Change Log
 
+## 26 May 2025: V 2.2.2 (by FORTH-ICS) 
+* Addition of new CLI parameter for X3ML validation (https://github.com/isl/x3ml/issues/169)
+
 ## 27 August 2024: V 2.2.1 (by FORTH-ICS) 
 
 * Performance improvements (([issue #162](https://github.com/isl/x3ml/issues/162)))
