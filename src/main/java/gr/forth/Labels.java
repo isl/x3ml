@@ -88,6 +88,7 @@ public class Labels {
     public static final String POLICY="policy";
     public static final String REPORT_PROGRESS="reportProgress";
     public static final String UUID_TEST_SIZE="uuidTestSize";
+    public static final String VALIDATE="validate";
     public static final String VERSION_NUMBER="version";
     public static final String MERGE_WITH_ASSOCIATION_TABLE="mergeAssocWithRDF";
     public static final String TERMS="terms";
@@ -99,6 +100,7 @@ public class Labels {
     public static final String POLICY_SHORT="p";
     public static final String REPORT_PROGRESS_SHORT="r";
     public static final String UUID_TEST_SIZE_SHORT="u";
+    public static final String VALIDATE_SHORT="d";
     public static final String VERSION_NUMBER_SHORT="v";
     public static final String MERGE_WITH_ASSOCIATION_TABLE_SHORT="m";
     public static final String TERMS_SHORT="t";    

@@ -42,6 +42,7 @@ import gr.forth.ics.isl.x3ml_reverse_utils.AssociationTableResources;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -111,6 +112,10 @@ public class X3MLCommandLine {
                                         +" --"+Labels.FORMAT+" text/turtle"
         );
         
+        Option x3mlValidateOption = new Option(Labels.VALIDATE_SHORT, Labels.VALIDATE, false,
+                "Only validate X3ML mapping file : --"+Labels.VALIDATE
+        );
+        
         Option uuidTestSizeOption = new Option(Labels.UUID_TEST_SIZE_SHORT, Labels.UUID_TEST_SIZE, true,
                 "Create a test UUID generator of the given size. \n Default is UUID from operating system"
         );
@@ -140,6 +145,7 @@ public class X3MLCommandLine {
                .addOption(outputOption)
                .addOption(outputFormatOption)
                .addOption(policyOption)
+               .addOption(x3mlValidateOption)
                .addOption(uuidTestSizeOption)
                .addOption(assocTableOption)
                .addOption(mergeAssocWithRDFOption)
@@ -171,6 +177,7 @@ public class X3MLCommandLine {
                     cli.getOptionValue(Labels.MERGE_WITH_ASSOCIATION_TABLE),
                     cli.hasOption(Labels.ASSOC_TABLE),
                     cli.hasOption(Labels.REPORT_PROGRESS),
+                    cli.hasOption(Labels.VALIDATE),
                     uuidTestSizeValue
                 );
             }
@@ -247,7 +254,7 @@ public class X3MLCommandLine {
         }
     }
 
-    static void go(String input, String x3ml, String policy, String rdf, String rdfFormat, String terms, String assocTableFilename, boolean mergeAssocTableWithRDF, boolean reportProgress, int uuidTestSize) throws Exception {
+    static void go(String input, String x3ml, String policy, String rdf, String rdfFormat, String terms, String assocTableFilename, boolean mergeAssocTableWithRDF, boolean reportProgress, boolean validateX3ML, int uuidTestSize) throws Exception {
         log.debug("Started executing X3MLEngine with the following parameters: "
                  +"\n\tInput: "+input
                  +"\n\tX3ML Mappings: "+x3ml
@@ -258,10 +265,23 @@ public class X3MLCommandLine {
                  +"\n\tAssociation table: "+assocTableFilename
                  +"\n\tReport progress: "+reportProgress
                  +"\n\tUUID Test Size: "+uuidTestSize
+                 +"\n\tX3ML Mappings (for validation): "+validateX3ML
                  +"\n\tMerge Association table with output: "+mergeAssocTableWithRDF) ;
         final String INPUT_FOLDER_PREFIX="#_";
         final String INPUT_PIPED="@";
         Element xmlElement;
+        
+        /* Check for validation */
+        if(validateX3ML){
+            try{
+                InputStream validationResultsStream=X3MLEngine.validateX3MLMappings(new FileInputStream(x3ml));
+                System.out.println("OK");
+                System.exit(1);
+            }catch(X3MLEngine.X3MLException ex){
+                System.err.println(ex.getMessage());
+                System.exit(-1);
+            }
+        }
         
         /* Read the input resource */
         if (INPUT_PIPED.equals(input)) {
